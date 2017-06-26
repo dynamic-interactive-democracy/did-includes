@@ -1,0 +1,30 @@
+{
+  "name": "did-includes",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "brfs": "^1.4.3",
+    "browserify": "^14.4.0"
+  },
+  "devDependencies": {
+    "express": "^4.15.3",
+    "openurl": "^1.1.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "manual-test": "node manualTest/start",
+    "build": "node build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dynamic-interactive-democracy/did-includes.git"
+  },
+  "author": "deranged <get@deranged.dk>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dynamic-interactive-democracy/did-includes/issues"
+  },
+  "homepage": "https://github.com/dynamic-interactive-democracy/did-includes#readme",
+  "false": {}
+}

@@ -5,7 +5,7 @@ module.exports = (api, integration) => (opts) => {
     return {
         renderIn: (container) => {
             //TODO: Load form view asynchronously?
-            container.innerHTML = fs.readFileSync(path.join(__dirname, "form.html.partial"), "utf8");
+            container.innerHTML = fs.readFileSync(path.join(__dirname, "form.html.partial"), "utf8"); //TODO: replace with some inliner that also does localization
             let form = container.querySelector("form.did-circle-form");
 
             //Prefill fields

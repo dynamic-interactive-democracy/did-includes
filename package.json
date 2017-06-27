@@ -5,7 +5,8 @@
   "main": "index.js",
   "dependencies": {
     "brfs": "^1.4.3",
-    "browserify": "^14.4.0"
+    "browserify": "^14.4.0",
+    "less": "^2.7.2"
   },
   "devDependencies": {
     "express": "^4.15.3",

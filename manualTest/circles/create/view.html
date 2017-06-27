@@ -2,13 +2,22 @@
 <html>
     <head>
         <title>circles/create manual test</title>
-        <script src="/scripts/lib.js"></script>
+        <link type="text/css" href="/assets/lib.css">
+        <script src="/assets/lib.js"></script>
     </head>
     <body>
         <div class="circle-container">(If this text persists, loading failed.)</div>
         <script>
             var did = require("did")();
-            did.includes.circleCreate.renderIn(document.querySelector(".circle-container"));
+            did.api.asUser(1234, "secret auth key");
+            var circleCreateInclude = did.includes.circleCreate({
+                fill: {
+                    title: "Imported Title",
+                    aim: "We aim to import this text.",
+                    fullState: "full"
+                }
+            });
+            circleCreateInclude.renderIn(document.querySelector(".circle-container"));
         </script>
     </body>
 </html>

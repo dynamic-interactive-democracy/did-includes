@@ -13,7 +13,7 @@ didIncludes.build();
 let app = express();
 
 app.get("/", staticView(path.join(__dirname, "index", "view.html")));
-app.use("/scripts", express.static(path.join(__dirname, "..", "output")));
+app.use("/assets", express.static(path.join(__dirname, "..", "output")));
 app.use("/circles", circleTestsApp());
 
 console.log("+ Launching manual test");

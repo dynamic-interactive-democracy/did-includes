@@ -1,8 +1,9 @@
-module.exports = (url) => {
+module.exports = (url, integrationConf) => {
     let api = require("./api-client/client")(url);
+    let integration = require("./integration/integration")(integrationConf);
     
     return {
         api: api,
-        includes: require("./includes/index")(api)
+        includes: require("./includes/index")(api, integration)
     };
 };

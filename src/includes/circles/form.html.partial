@@ -1,2 +1,27 @@
-<h1>Hello</h1>
-<p>I am form</p>
+<form class="did-form did-circle-form">
+    <label for="title">
+        Title
+        <input type="text" name="title">
+    </label>
+    <label for="vision">
+        Vision
+        <textarea name="vision" class="did-markdown-field"></textarea>
+    </label>
+    <label for="mission">
+        Mission
+        <textarea name="mission" class="did-markdown-field"></textarea>
+    </label>
+    <label for="aim">
+        Aim
+        <textarea name="aim" class="did-markdown-field"></textarea>
+    </label>
+    <label for="fullState">
+        Open to more members?
+        <select name="fullState">
+            <option value="lookingForMore">Looking for more</option>
+            <option value="openForMore">Open for more</option>
+            <option value="full">Full</option>
+        </select>
+    </label>
+    <button>Create circle</button>
+</form>

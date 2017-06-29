@@ -1,11 +1,11 @@
-const fs = require("fs");
 const path = require("path");
+const locale = require("../../locale");
+const y18nMustacheReader = require("../../y18n-mustache-reader");
 
 module.exports = (api, integration) => (opts) => {
     return {
         renderIn: (container) => {
-            //TODO: Load form view asynchronously?
-            container.innerHTML = fs.readFileSync(path.join(__dirname, "form.html.partial"), "utf8"); //TODO: replace with some inliner that also does localization
+            container.innerHTML = y18nMustacheReader.readSync(locale(), path.join(__dirname, "form.html.partial"));
             let form = container.querySelector("form.did-circle-form");
 
             //Prefill fields

@@ -1,32 +1,32 @@
 <form class="did-form did-circle-form">
     <div class="did-form-row">
         <label for="title">
-            Title
+            {{#__}}Title{{/__}}
             <input type="text" name="title">
         </label>
         <label for="vision">
-            Vision
+            {{#__}}Vision{{/__}}
             <textarea name="vision" class="did-markdown-field"></textarea>
         </label>
         <label for="mission">
-            Mission
+            {{#__}}Mission{{/__}}
             <textarea name="mission" class="did-markdown-field"></textarea>
         </label>
         <label for="aim">
-            Aim
+            {{#__}}Aim{{/__}}
             <textarea name="aim" class="did-markdown-field"></textarea>
         </label>
     </div>
     <div class="did-form-row">
         <label for="fullState">
-            Open to more members?
+            {{#__}}Open to more members?{{/__}}
             <select name="fullState">
-                <option value="lookingForMore">Looking for more</option>
-                <option value="openForMore">Open for more</option>
-                <option value="full">Full</option>
+                <option value="lookingForMore">{{#__}}Looking for more{{/__}}</option>
+                <option value="openForMore">{{#__}}Open for more{{/__}}</option>
+                <option value="full">{{#__}}Full{{/__}}</option>
             </select>
         </label>
         <!--//TODO: we also need a way to add members, enter expectations for members.-->
     </div>
-    <button>Create circle</button>
+    <button>{{#__}}Create circle{{/__}}</button>
 </form>

@@ -1,5 +1,5 @@
-module.exports = (api) => {
+module.exports = (api, integration) => {
     return {
-        circleCreate: require("./circles/create")(api)
+        circleCreate: require("./circles/create")(api, integration)
     };
 };

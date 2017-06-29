@@ -26,8 +26,10 @@ function buildOutput(outDir, localeDir) {
             let b = browserify();
 
             b.require("./src/main.js", { expose: "did" });
+            b.transform("./browserify-path-inliner");
             b.transform("./browserify-locale-inliner", { locale: locale });
-            b.transform("./browserify-y18n-mustache-inliner")
+            b.transform("./browserify-y18n-mustache-inliner");
+            b.transform("babelify", { presets: [ "es2015", "babili" ] });
 
             //TODO: error handle
             let outStream = fs.createWriteStream(outJs);

@@ -8,6 +8,13 @@ module.exports = (url) => {
     };
     return {
         asUser: (id, authKey) => setUser(state, id, authKey),
+        user: {
+            get: (callback) => request(state, "GET", "/user", callback)
+        },
+        users: {
+            get: (callback) => request(state, "GET", "/users", callback),
+            create: (data, callback) => request(state, "POST", "/users", data, callback)
+        },
         circles: {
             create: (data, callback) => request(state, "POST", "/circles", data, callback),
             update: (id, data, callback) => request(state, "PUT", `/circles/${id}`, data, callback)
@@ -28,13 +35,40 @@ function request(state, method, path, data, callback) {
 
     let req = new XMLHttpRequest();
     req.open(method, state.url + path);
-    req.setRequestHeader("Authentication", "TODO"); //TODO: state.user info
+    req.setRequestHeader("Authorization", `Basic ${btoa(`${state.user.id}:${state.user.authKey}`)}`);
+
+    req.onreadystatechange = function() {
+        if(req.readyState != 4) {
+            return;
+        }
+        if(req.status >= 200 && req.status < 300) {
+            if(req.responseType != "json") {
+                try {
+                    let response = JSON.parse(req.response);
+                    return callback(null, response);
+                }
+                catch(e) {
+                    return callback({
+                        trace: new Error("API responded in something that was not JSON."),
+                        status: req.statusText,
+                        responseType: req.responseType,
+                        response: req.response
+                    });
+                }
+            }
+            return callback(null, req.response);
+        }
+        callback({
+            trace: new Error("API call failed."),
+            status: req.statusText,
+            responseType: req.responseType,
+            response: req.response
+        });
+    };
+    
     if(data) {
         req.setRequestHeader("Content-Type", "application/json");
-        req.send(JSON.stringify(data));
+        return req.send(JSON.stringify(data));
     }
-
-    req.onreadystatechange = null; //TODO: error and success handling
-    //TODO: send request
-    callback(new Error("Not implemented"));
+    req.send();
 }

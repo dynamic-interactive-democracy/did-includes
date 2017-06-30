@@ -21,6 +21,17 @@ module.exports = (api, integration) => (opts) => {
                 });
             }
 
+            let inviteMembersSelect = document.querySelector("[name=inviteMembers]");
+
+            api.users.get((error, data) => {
+                if(error) {
+                    return console.error("Failed to load users.", error);
+                }
+                let options = data.users.map(user => `<option value="${user.userId}">${user.name}</option>`);
+                inviteMembersSelect.innerHTML = `<option></option>` + options;
+                //TODO: register select listener.
+            });
+
             form.addEventListener("submit", (e) => {
                 e.preventDefault();
                 //TODO: validate content

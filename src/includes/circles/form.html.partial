@@ -26,6 +26,17 @@
                 <option value="full">{{#__}}Full{{/__}}</option>
             </select>
         </label>
+        <label for="expectationsForMembers">
+            {{#__}}Expectations for members{{/__}}
+            <textarea name="expectationsForMembers" class="did-markdown-field"></textarea>
+        </label>
+        <label for="inviteMembers">
+            {{#__}}Invite members to circle?{{/__}}
+            <select name="inviteMembers">
+                <option>{{#__}}Loading members...{{/__}}</option>
+            </select>
+        </label>
+        <div class="invitedMembersList"></div>
         <!--//TODO: we also need a way to add members, enter expectations for members.-->
     </div>
     <button>{{#__}}Create circle{{/__}}</button>

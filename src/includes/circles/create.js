@@ -21,7 +21,8 @@ module.exports = (api, integration) => (opts) => {
                 });
             }
 
-            let inviteMembersSelect = document.querySelector("[name=inviteMembers]");
+            let inviteMembersSelect = form.querySelector("[name=inviteMembers]");
+            let invitedMembersList = form.querySelector(".invitedMembersList");
 
             api.users.get((error, data) => {
                 if(error) {
@@ -29,7 +30,19 @@ module.exports = (api, integration) => (opts) => {
                 }
                 let options = data.users.map(user => `<option value="${user.userId}">${user.name}</option>`);
                 inviteMembersSelect.innerHTML = `<option></option>` + options;
-                //TODO: register select listener.
+
+                inviteMembersSelect.addEventListener("change", (e) => {
+                    let id = inviteMembersSelect.value;
+                    let opt = inviteMembersSelect.querySelector(`option[value='${id}']`);
+                    let name = opt.innerText;
+                    inviteMembersSelect.removeChild(opt);
+                    //TODO: alt to using `document`? (Breaks general usage!!!)
+                    let memberElement = document.createElement("div");
+                    memberElement.classList = "invite-member";
+                    memberElement.innerText = name;
+                    invitedMembersList.appendChild(memberElement);
+                    //TODO: remove element again
+                });
             });
 
             form.addEventListener("submit", (e) => {

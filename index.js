@@ -2,6 +2,7 @@ const browserify = require("browserify");
 const fs = require("fs");
 const path = require("path");
 const less = require("less");
+const LessPluginCleanCss = require("less-plugin-clean-css");
 
 module.exports = {
     build: buildOutput,
@@ -41,9 +42,11 @@ function buildOutput(outDir, localeDir) {
 
     //Build css bundle
     console.log("building css");
+    let cleanCss = new LessPluginCleanCss({ advanced: true });
     less.render(`@import "main.less";`, {
         paths: [ path.join(__dirname, "styles") ],
-        filename: "index.js"
+        filename: "index.js",
+        plugins: [ cleanCss ]
     }, (error, output) => {
         //TODO: Proper callback
         if(error) {

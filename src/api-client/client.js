@@ -43,18 +43,19 @@ function request(state, method, path, data, callback) {
         }
         if(req.status >= 200 && req.status < 300) {
             if(req.responseType != "json") {
+                let response = null;
                 try {
-                    let response = JSON.parse(req.response);
-                    return callback(null, response);
+                    response = JSON.parse(req.response);
                 }
                 catch(e) {
                     return callback({
-                        trace: new Error("API responded in something that was not JSON."),
+                        trace: new Error("API responded in something that was not JSON and could not be parsed as JSON."),
                         status: req.statusText,
                         responseType: req.responseType,
                         response: req.response
                     });
                 }
+                return callback(null, response);
             }
             return callback(null, req.response);
         }

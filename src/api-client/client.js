@@ -17,7 +17,9 @@ module.exports = (url) => {
         },
         circles: {
             create: (data, callback) => request(state, "POST", "/circles", data, callback),
-            update: (id, data, callback) => request(state, "PUT", `/circles/${id}`, data, callback)
+            update: (id, data, callback) => request(state, "PUT", `/circles/${id}`, data, callback),
+            get: (id, callback) => request(state, "GET", `/circles/${id}`, callback),
+            getAll: (callback) => request(state, "GET", `/circles`, callback)
         }
     };
 };

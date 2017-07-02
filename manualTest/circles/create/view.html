@@ -8,8 +8,12 @@
     <body>
         <div class="circle-container">(If this text persists, loading failed.)</div>
         <script>
-            var did = require("did")();
-            did.api.asUser(1234, "secret auth key");
+            var did = require("did")("http://localhost:3001", {
+                circles: {
+                    view: (id) => location.href = location.protocol + "//" + location.host + "/circles/view?id=" + id
+                }
+            });
+            did.api.asUser("nix", "2661ac5c990c06d41eed827aefb5fd32f9e335cfe40a137d21b401df20d83877a68772e5781b89b2add9c84562f357d53f14513087eea3f61aa33ad2c0a9ad7f");
             var circleCreateInclude = did.includes.circleCreate({
                 fill: {
                     title: "Imported Title",

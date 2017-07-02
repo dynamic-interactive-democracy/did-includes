@@ -16,4 +16,5 @@ module.exports = (conf) => {
 
 function validateConf(conf) {
     //TODO: validate expected structure, return clean version
+    return conf;
 }

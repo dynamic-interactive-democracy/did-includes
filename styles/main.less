@@ -4,6 +4,7 @@
     max-width: 800px;
     flex-wrap: wrap;
     justify-content: space-around;
+    position: relative;
 }
 .did-form .did-form-row {
     display: block;
@@ -46,4 +47,25 @@
 }
 .did-uninvite-member-button:after {
     content: '×';
+}
+.did-form-overlay {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    background: rgba(255,255,255,0.85);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    opacity: 0;
+    transition: opacity 0.5s;
+}
+.did-overlay-message {
+    opacity: 0;
+    transition: opacity 0.5s;
+    font-size: 1.2em;
+    height: 0;
+    overflow: visible;
 }

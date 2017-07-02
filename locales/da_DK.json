@@ -10,5 +10,8 @@
   "Create circle": "Opret cirkel",
   "Invite members to circle?": "Invitér medlemmer til cirklen?",
   "Loading members...": "Henter medlemmer...",
-  "Expectations for members": "Forventninger til medlemmer"
+  "Expectations for members": "Forventninger til medlemmer",
+  "Creating circle...": "Opretter cirkel...",
+  "Failed to create circle.": "Der gik noget galt under oprettelse af cirklen.",
+  "Circle created!": "Cirkel oprettet!"
 }

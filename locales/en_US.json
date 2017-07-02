@@ -10,5 +10,8 @@
   "Create circle": "Create circle",
   "Invite members to circle?": "Invite members to circle?",
   "Loading members...": "Loading members...",
-  "Expectations for members": "Expectations for members"
+  "Expectations for members": "Expectations for members",
+  "Creating circle...": "Creating circle...",
+  "Failed to create circle.": "Failed to create circle.",
+  "Circle created!": "Circle created!"
 }

@@ -15,7 +15,7 @@ module.exports = (api, integration) => (opts) => {
             }
 
             let inviteMembersSelect = form.querySelector("[name=inviteMembers]");
-            let invitedMembersList = form.querySelector(".invitedMembersList");
+            let invitedMembersList = form.querySelector(".did-invited-members-list");
             let invitedMembers = [];
 
             api.users.get((error, data) => {
@@ -78,7 +78,7 @@ function prefillFields(form, fill) {
         }
         element.value = fill[key];
         //This has been verified to work for: input, textarea, select
-        //Not yet verified: checkbox, radio
+        //TODO: Not yet verified: checkbox, radio
     });
 }
 
@@ -97,31 +97,73 @@ function getElementAlphaAfter(container, content) {
 }
 
 function sendCreateCircleRequest(api, integration, form, invitedMembers) {
-    //TODO: show some sort of loading indication
     let validation = validateData(form, invitedMembers);
     if(!validation.valid) {
         //TODO: show errors on form
         return console.error("Failed to submit form because invalid data.");
     }
+    let overlay = getOverlay(form);
+    overlay.loading();
     api.circles.create(validation.data, (error, result) => {
         if(error) {
-            //TODO: Show error message in form
+            overlay.failure();
             return console.error("Failed to create circle.", error);
         }
-        //TODO: somehow, based on result, redirect to correct url for viewing a circle
-        integration.circles.view(result.circle.id);
+        overlay.success(() => integration.circles.view(result.circle.id));
     });
 }
 
+function getOverlay(form) {
+    let overlay = form.querySelector(".did-form-overlay");
+    let loadingMsg = overlay.querySelector(".did-overlay-message-loading");
+    let failureMsg = overlay.querySelector(".did-overlay-message-failure");
+    let successMsg = overlay.querySelector(".did-overlay-message-success");
+
+    let hideAllMsgs = () => {
+        loadingMsg.style = "";
+        failureMsg.style = "";
+        successMsg.style = "";
+    };
+
+    let hide = () => {
+        overlay.style = "display:flex;opacity:0;";
+        hideAllMsgs();
+        setTimeout(() => overlay.style = "", 500);
+    };
+
+    let showMsg = (msg) => {
+        hideAllMsgs();
+        overlay.style = "display:flex;opacity:1;";
+        msg.style = "opacity:1;";
+    }
+
+    return {
+        loading: () => showMsg(loadingMsg),
+        failure: () => {
+            showMsg(failureMsg);
+            setTimeout(hide, 2500);
+        },
+        success: (callback) => {
+            showMsg(successMsg);
+            setTimeout(() => {
+                hide();
+                callback();
+            }, 1200);
+        }
+    };
+}
+
 function validateData(form, invitedMembers) {
+    let getValue = (name) => form[name].value;
+
     let valid = true;
     let errors = {};
-    let name = getValue(form, "title");
-    let vision = getValue(form, "vision");
-    let mission = getValue(form, "mission");
-    let aim = getValue(form, "aim");
-    let fullState = getValue(form, "fullState");
-    let expectationsForMembers = getValue(form, "expectationsForMembers");
+    let name = getValue("title");
+    let vision = getValue("vision");
+    let mission = getValue("mission");
+    let aim = getValue("aim");
+    let fullState = getValue("fullState");
+    let expectationsForMembers = getValue("expectationsForMembers");
     let invited = invitedMembers;
 
     //TODO: actually validate
@@ -133,8 +175,4 @@ function validateData(form, invitedMembers) {
         };
     }
     return { valid, errors };
-}
-
-function getValue(form, name) {
-    return form.querySelector(`[name=${name}]`).value;
 }

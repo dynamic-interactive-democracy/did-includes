@@ -8,6 +8,7 @@ module.exports = (url) => {
     };
     return {
         asUser: (id, authKey) => setUser(state, id, authKey),
+        getCurrentUserId: () => state.user.id,
         user: {
             get: (callback) => request(state, "GET", "/user", callback)
         },

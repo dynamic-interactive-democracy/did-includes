@@ -39,25 +39,27 @@ function request(state, method, path, data, callback) {
     let req = new XMLHttpRequest();
     req.open(method, state.url + path);
     req.setRequestHeader("Authorization", `Basic ${btoa(`${state.user.id}:${state.user.authKey}`)}`);
+    req.responseType = "json";
 
     req.onreadystatechange = function() {
         if(req.readyState != 4) {
             return;
         }
         if(req.status >= 200 && req.status < 300) {
-            if(req.responseType != "json") {
+            if(!req.response && (req.responseType == "" || req.responseType == "document")) {
                 let response = null;
                 try {
-                    response = JSON.parse(req.response);
+                    response = JSON.parse(req.responseText);
                 }
                 catch(e) {
                     return callback({
                         trace: new Error("API responded in something that was not JSON and could not be parsed as JSON."),
                         status: req.statusText,
                         responseType: req.responseType,
-                        response: req.response
+                        response: req.responseText
                     });
                 }
+                console.warn(`[did/api-client] Got response from API that was not automatically JSON from ${method} ${path}. Managed to parse it anyway.`, response);
                 return callback(null, response);
             }
             return callback(null, req.response);

@@ -37,10 +37,9 @@
             </select>
         </label>
         <div class="did-invited-members-list"></div>
-        <!--//TODO: we also need a way to add members, enter expectations for members.-->
     </div>
     <button>{{#__}}Create circle{{/__}}</button>
-    <div class="did-form-overlay">
+    <div class="did-overlay">
         <div class="did-overlay-message did-overlay-message-loading">{{#__}}Creating circle...{{/__}}</div>
         <div class="did-overlay-message did-overlay-message-failure">{{#__}}Failed to create circle.{{/__}}</div>
         <div class="did-overlay-message did-overlay-message-success">{{#__}}Circle created!{{/__}}</div>

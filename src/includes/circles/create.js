@@ -1,6 +1,7 @@
 const path = require("path");
 const locale = require("../../locale");
 const y18nMustacheReader = require("../../y18n-mustache-reader");
+const getOverlay = require("../getFormOverlay");
 
 module.exports = (api, integration) => (opts) => {
     return {
@@ -109,48 +110,8 @@ function sendCreateCircleRequest(api, integration, form, invitedMembers) {
             overlay.failure();
             return console.error("Failed to create circle.", error);
         }
-        overlay.success(() => integration.circles.view(result.circle.id));
+        overlay.success(() => integration.circles.view(result.circle.circleId));
     });
-}
-
-function getOverlay(form) {
-    let overlay = form.querySelector(".did-form-overlay");
-    let loadingMsg = overlay.querySelector(".did-overlay-message-loading");
-    let failureMsg = overlay.querySelector(".did-overlay-message-failure");
-    let successMsg = overlay.querySelector(".did-overlay-message-success");
-
-    let hideAllMsgs = () => {
-        loadingMsg.style = "";
-        failureMsg.style = "";
-        successMsg.style = "";
-    };
-
-    let hide = () => {
-        overlay.style = "display:flex;opacity:0;";
-        hideAllMsgs();
-        setTimeout(() => overlay.style = "", 500);
-    };
-
-    let showMsg = (msg) => {
-        hideAllMsgs();
-        overlay.style = "display:flex;opacity:1;";
-        msg.style = "opacity:1;";
-    }
-
-    return {
-        loading: () => showMsg(loadingMsg),
-        failure: () => {
-            showMsg(failureMsg);
-            setTimeout(hide, 2500);
-        },
-        success: (callback) => {
-            showMsg(successMsg);
-            setTimeout(() => {
-                hide();
-                callback();
-            }, 1200);
-        }
-    };
 }
 
 function validateData(form, invitedMembers) {

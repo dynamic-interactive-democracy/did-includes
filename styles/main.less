@@ -1,4 +1,4 @@
-.did-form {
+.did-form, .did-view {
     display: flex;
     font-family: sans-serif;
     max-width: 800px;
@@ -6,7 +6,7 @@
     justify-content: space-around;
     position: relative;
 }
-.did-form .did-form-row {
+.did-form .did-form-row, .did-view-row {
     display: block;
     flex-basis: 300px;
     box-sizing: border-box;
@@ -14,10 +14,17 @@
     flex-shrink: 1;
     margin: 0 10px;
 }
-.did-form label {
+.did-form label, .did-view-label {
     display: block;
     box-sizing: border-box;
     margin: 10px 0;
+}
+.did-view-label {
+    font-size: 0.75em;
+    margin-bottom: 1.2em;
+}
+.did-view-value {
+    font-size: 1.3em;
 }
 .did-form button {
     display: block;
@@ -48,7 +55,7 @@
 .did-uninvite-member-button:after {
     content: '×';
 }
-.did-form-overlay {
+.did-overlay {
     position: absolute;
     left: 0;
     right: 0;

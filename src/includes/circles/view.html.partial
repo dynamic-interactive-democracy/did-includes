@@ -1,0 +1,41 @@
+<div class="did-view">
+    <div class="did-view-row">
+        <div class="did-view-label did-view-label-title">
+            {{#__}}Title{{/__}}
+            <div class="did-view-value did-view-value-title"></div>
+        </div>
+        <div class="did-view-label did-view-label-vision">
+            {{#__}}Vision{{/__}}
+            <div class="did-view-value did-view-value-vision"></div>
+        </div>
+        <div class="did-view-label did-view-label-mission">
+            {{#__}}Mission{{/__}}
+            <div class="did-view-value did-view-value-mission"></div>
+        </div>
+        <div class="did-view-label did-view-label-aim">
+            {{#__}}Aim{{/__}}
+            <div class="did-view-value did-view-value-aim"></div>
+        </div>
+    </div>
+    <div class="did-view-row">
+        <div class="did-view-label did-view-label-fullState">
+            {{#__}}Open to more members?{{/__}}
+            <div class="did-view-value did-view-value-fullState"></div>
+        </div>
+        <div class="did-view-label did-view-label-expectationsForMembers">
+            {{#__}}Expectations for members{{/__}}
+            <div class="did-view-value did-view-value-expectationsForMembers"></div>
+        </div>
+        <div class="did-view-label did-view-label-members">
+            {{#__}}Members{{/__}}
+            <div class="did-view-value did-view-value-members"></div>
+        </div>
+        <div class="did-view-label did-view-label-invited">
+            {{#__}}Invited{{/__}}
+            <div class="did-view-value did-view-value-invited"></div>
+        </div>
+    </div>
+    <div class="did-overlay">
+        <div class="did-overlay-message did-overlay-message-loading">{{#__}}Loading circle...{{/__}}</div>
+    </div>
+</div>

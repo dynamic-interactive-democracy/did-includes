@@ -13,5 +13,8 @@
   "Expectations for members": "Forventninger til medlemmer",
   "Creating circle...": "Opretter cirkel...",
   "Failed to create circle.": "Der gik noget galt under oprettelse af cirklen.",
-  "Circle created!": "Cirkel oprettet!"
+  "Circle created!": "Cirkel oprettet!",
+  "Members": "Members",
+  "Invited": "Invited",
+  "Loading circle...": "Loading circle..."
 }

@@ -7,6 +7,7 @@ module.exports = () => {
 
     app.get("/create", staticView(path.join(__dirname, "create", "view.html")));
     app.get("/view", staticView(path.join(__dirname, "view", "view.html")));
+    app.get("/edit", staticView(path.join(__dirname, "edit", "view.html")));
 
     return app;
 };

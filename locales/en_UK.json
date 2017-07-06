@@ -16,5 +16,13 @@
   "Circle created!": "Circle created!",
   "Members": "Members",
   "Invited": "Invited",
-  "Loading circle...": "Loading circle..."
+  "Loading circle...": "Loading circle...",
+  "Contact person": "Contact person",
+  "Loading users...": "Loading users...",
+  "Loading form...": "Loading form...",
+  "Updating circle...": "Updating circle...",
+  "Failed to update circle.": "Failed to update circle.",
+  "Circle updated!": "Circle updated!",
+  "Edit circle": "Edit circle",
+  "Update circle": "Update circle"
 }

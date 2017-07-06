@@ -14,7 +14,15 @@
   "Creating circle...": "Opretter cirkel...",
   "Failed to create circle.": "Der gik noget galt under oprettelse af cirklen.",
   "Circle created!": "Cirkel oprettet!",
-  "Members": "Members",
-  "Invited": "Invited",
-  "Loading circle...": "Loading circle..."
+  "Members": "Medlemmer",
+  "Invited": "Inviterede",
+  "Loading circle...": "Henter cirkel...",
+  "Contact person": "Kontaktperson",
+  "Loading users...": "Henter brugere...",
+  "Loading form...": "Henter formular...",
+  "Updating circle...": "Opdaterer cirkel...",
+  "Failed to update circle.": "Der gik noget galt under opdatering af cirklen.",
+  "Circle updated!": "Cirkel opdateret!",
+  "Edit circle": "Rediger cirkel",
+  "Update circle": "Opdater cirkel"
 }

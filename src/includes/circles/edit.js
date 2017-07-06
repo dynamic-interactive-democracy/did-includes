@@ -76,12 +76,12 @@ module.exports = (api, integration) => (opts) => {
                 contactPersonSelect.innerHTML = contactPersonOptions;
                 contactPersonSelect.value = circle.contactPerson;
 
-                addRemovableMemberElementsToList(memberUsers, membersRemoverState);
-                addRemovableMemberElementsToList(invitedUsers, inviteMembersRemoverState);
+                addRemovableMemberElementsToList(api, opts.id, memberUsers, membersRemoverState);
+                addRemovableMemberElementsToList(api, opts.id, invitedUsers, inviteMembersRemoverState);
 
                 setUpMemberInviteSelect(inviteMembersRemoverState, {
-                    invite: (id, callback) => { inviteMembersRemoverState.members.push(id); setTimeout(callback); }, //TODO: API calls for invite/remove
-                    remove: (id, callback) => { inviteMembersRemoverState.members = inviteMembersRemoverState.members.filter(invitedId => invitedId != id); setTimeout(callback); }
+                    invite: (userId, callback) => api.circles.members.invite(opts.id, userId, callback),
+                    remove: (userId, callback) => api.circles.members.remove(opts.id, userId, callback)
                 });
 
                 overlay.hide();
@@ -96,9 +96,8 @@ module.exports = (api, integration) => (opts) => {
     };
 };
 
-function addRemovableMemberElementsToList(users, state) {
-    //TODO: removeHook should API call
-    users.map(user => createRemovableMemberElement(user.userId, user.name, state, (id, callback) => { state.members = state.members.filter(invitedId => invitedId != id); setTimeout(callback); }))
+function addRemovableMemberElementsToList(api, circleId, users, state) {
+    users.map(user => createRemovableMemberElement(user.userId, user.name, state, (userId, callback) => api.circles.members.remove(circleId, userId, callback)))
          .forEach((memberElement) => state.membersList.appendChild(memberElement));
 }
 

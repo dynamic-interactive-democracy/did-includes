@@ -20,7 +20,11 @@ module.exports = (url) => {
             create: (data, callback) => request(state, "POST", "/circles", data, callback),
             update: (id, data, callback) => request(state, "PUT", `/circles/${id}`, data, callback),
             get: (id, callback) => request(state, "GET", `/circles/${id}`, callback),
-            getAll: (callback) => request(state, "GET", `/circles`, callback)
+            getAll: (callback) => request(state, "GET", `/circles`, callback),
+            members: {
+                invite: (circleId, userId, callback) => request(state, "POST", `/circles/${circleId}/members`, { userId }, callback),
+                remove: (circleId, userId, callback) => request(state, "DELETE", `/circles/${circleId}/members/${userId}`, callback)
+            }
         }
     };
 };

@@ -1,16 +1,10 @@
 # TODO
 
-- Form that submits correctly (see TODOs in create.js and client.js and form.html.partial)
-- Fix last TODOs so far (create.js, client.js, integration.js, form.html.partial)
+- Circles should contain procedure texts (visible on edit, hidden but viewable in view)
+- Last TODOs in create.js view.js edit.js and related files. (All of src/)
+- Update docs on integration based on current use.
 - Error handling in build script
-- Identify a good markdown editor
-
-## rightnow
-
-api: circle name should not be unique required
-includes: show error on validation error
-api: circle: default values for procedures
-api: serve early version of this
+- Markdown previews in edit and create includes.
 
 ## Later
 

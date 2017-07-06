@@ -1,8 +1,13 @@
 <div class="did-view">
+    <a href="#edit-circle" class="did-edit-link">{{#__}}Edit circle{{/__}}</a>
     <div class="did-view-row">
         <div class="did-view-label did-view-label-title">
             {{#__}}Title{{/__}}
             <div class="did-view-value did-view-value-title"></div>
+        </div>
+        <div class="did-view-label did-view-label-contactPerson">
+            {{#__}}Contact person{{/__}}
+            <div class="did-view-value did-view-value-contactPerson"></div>
         </div>
         <div class="did-view-label did-view-label-vision">
             {{#__}}Vision{{/__}}

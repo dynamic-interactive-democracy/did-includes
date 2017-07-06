@@ -4,6 +4,12 @@
             {{#__}}Title{{/__}}
             <input type="text" name="title">
         </label>
+        <label for="members">
+            {{#__}}Contact person{{/__}}
+            <select name="contactPerson">
+                <option>{{#__}}Loading users...{{/__}}</option>
+            </select>
+        </label>
         <label for="vision">
             {{#__}}Vision{{/__}}
             <textarea name="vision" class="did-markdown-field"></textarea>
@@ -30,18 +36,23 @@
             {{#__}}Expectations for members{{/__}}
             <textarea name="expectationsForMembers" class="did-markdown-field"></textarea>
         </label>
+        <label for="members">
+            {{#__}}Members{{/__}}
+        </label>
+        <div class="did-members-list"></div>
         <label for="inviteMembers">
             {{#__}}Invite members to circle?{{/__}}
             <select name="inviteMembers">
-                <option>{{#__}}Loading members...{{/__}}</option>
+                <option>{{#__}}Loading users...{{/__}}</option>
             </select>
         </label>
         <div class="did-invited-members-list"></div>
     </div>
-    <button>{{#__}}Create circle{{/__}}</button>
+    <button>{{#__}}Update circle{{/__}}</button>
     <div class="did-overlay">
-        <div class="did-overlay-message did-overlay-message-loading">{{#__}}Creating circle...{{/__}}</div>
-        <div class="did-overlay-message did-overlay-message-failure">{{#__}}Failed to create circle.{{/__}}</div>
-        <div class="did-overlay-message did-overlay-message-success">{{#__}}Circle created!{{/__}}</div>
+        <div class="did-overlay-message did-overlay-message-loading">{{#__}}Loading form...{{/__}}</div>
+        <div class="did-overlay-message did-overlay-message-posting">{{#__}}Updating circle...{{/__}}</div>
+        <div class="did-overlay-message did-overlay-message-failure">{{#__}}Failed to update circle.{{/__}}</div>
+        <div class="did-overlay-message did-overlay-message-success">{{#__}}Circle updated!{{/__}}</div>
     </div>
 </form>

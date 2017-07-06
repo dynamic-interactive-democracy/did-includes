@@ -1,6 +1,7 @@
 module.exports = (form) => {
     let overlay = form.querySelector(".did-overlay");
     let loadingMsg = overlay.querySelector(".did-overlay-message-loading");
+    let postingMsg = overlay.querySelector(".did-overlay-message-posting");
     let failureMsg = overlay.querySelector(".did-overlay-message-failure");
     let successMsg = overlay.querySelector(".did-overlay-message-success");
 
@@ -8,6 +9,7 @@ module.exports = (form) => {
         loadingMsg.style = "";
         failureMsg.style = "";
         successMsg.style = "";
+        postingMsg.style = "";
     };
 
     let hide = () => {
@@ -24,6 +26,7 @@ module.exports = (form) => {
 
     return {
         loading: () => showMsg(loadingMsg),
+        posting: () => showMsg(postingMsg),
         failure: () => {
             showMsg(failureMsg);
             setTimeout(hide, 2500);

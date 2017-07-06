@@ -1,1 +1,1 @@
-module.exports = process.env.DID_LOCALE || "en_US";
+module.exports = () => process.env.DID_LOCALE || "en_US";

@@ -1,0 +1,48 @@
+<form class="did-form did-circle-form">
+    <div class="did-form-row">
+        <label for="title">
+            {{#__}}Title{{/__}}
+            <input type="text" name="title">
+        </label>
+        <label for="vision">
+            {{#__}}Vision{{/__}}
+            <textarea name="vision" class="did-markdown-field"></textarea>
+        </label>
+        <label for="mission">
+            {{#__}}Mission{{/__}}
+            <textarea name="mission" class="did-markdown-field"></textarea>
+        </label>
+        <label for="aim">
+            {{#__}}Aim{{/__}}
+            <textarea name="aim" class="did-markdown-field"></textarea>
+        </label>
+    </div>
+    <div class="did-form-row">
+        <label for="fullState">
+            {{#__}}Open to more members?{{/__}}
+            <select name="fullState">
+                <option value="lookingForMore">{{#__}}Looking for more{{/__}}</option>
+                <option value="openForMore">{{#__}}Open for more{{/__}}</option>
+                <option value="full">{{#__}}Full{{/__}}</option>
+            </select>
+        </label>
+        <label for="expectationsForMembers">
+            {{#__}}Expectations for members{{/__}}
+            <textarea name="expectationsForMembers" class="did-markdown-field"></textarea>
+        </label>
+        <label for="inviteMembers">
+            {{#__}}Invite members to circle?{{/__}}
+            <select name="inviteMembers">
+                <option>{{#__}}Loading users...{{/__}}</option>
+            </select>
+        </label>
+        <div class="did-invited-members-list"></div>
+    </div>
+    <button>{{#__}}Create circle{{/__}}</button>
+    <div class="did-overlay">
+        <div class="did-overlay-message did-overlay-message-loading">{{#__}}Loading form...{{/__}}</div>
+        <div class="did-overlay-message did-overlay-message-posting">{{#__}}Creating circle...{{/__}}</div>
+        <div class="did-overlay-message did-overlay-message-failure">{{#__}}Failed to create circle.{{/__}}</div>
+        <div class="did-overlay-message did-overlay-message-success">{{#__}}Circle created!{{/__}}</div>
+    </div>
+</form>

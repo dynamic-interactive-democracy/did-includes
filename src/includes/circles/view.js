@@ -6,6 +6,12 @@ const getOverlay = require("../getViewOverlay");
 const createDomNode = require("../createDomNode");
 const marked = require("marked");
 
+//Strip out HTML sections in the Markdown.
+const markedRenderer = new marked.Renderer();
+markedRenderer.html = (html) => "";
+
+marked.setOptions({ renderer: markedRenderer });
+
 module.exports = (api, integration) => (opts) => {
     return {
         renderIn: (container) => {

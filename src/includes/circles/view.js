@@ -1,7 +1,7 @@
 const path = require("path");
 const locale = require("../../locale");
 const y18nMustacheReader = require("../../y18n-mustache-reader");
-const parallel = require("async/parallel");
+const parallel = require("../../tiny-parallel");
 const getOverlay = require("../getViewOverlay");
 const createDomNode = require("../createDomNode");
 const marked = require("marked");
@@ -25,7 +25,7 @@ module.exports = (api, integration) => (opts) => {
                 throw new Error("Missing circle ID for circleView include. You should provide `id` as an option when creating the include.");
             }
 
-            parallel({ //TODO: async/parallel makes the bundle *huge*. Fix!
+            parallel({
                 usersRequest: (callback) => api.users.get(callback),
                 circleRequest: (callback) => api.circles.get(opts.id, callback)
             }, (error, result) => {

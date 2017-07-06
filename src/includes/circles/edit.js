@@ -2,7 +2,7 @@ const path = require("path");
 const locale = require("../../locale");
 const y18nMustacheReader = require("../../y18n-mustache-reader");
 const getOverlay = require("../getFormOverlay");
-const parallel = require("async/parallel");
+const parallel = require("../../tiny-parallel");
 const createRemovableMemberElement = require("../createRemovableMemberElement");
 const setUpMemberInviteSelect = require("../setUpMemberInviteSelect");
 

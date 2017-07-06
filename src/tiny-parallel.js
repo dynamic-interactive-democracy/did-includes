@@ -3,6 +3,9 @@ module.exports = (funcs, callback) => {
     let result = {};
     let keys = Object.keys(funcs);
     keys.forEach(key => funcs[key]((error, funcResult) => {
+            if(errored) {
+                return;
+            }
             if(error) {
                 errored = true;
                 return callback(error);

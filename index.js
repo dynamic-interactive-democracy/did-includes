@@ -3,24 +3,46 @@ const fs = require("fs");
 const path = require("path");
 const less = require("less");
 const LessPluginCleanCss = require("less-plugin-clean-css");
+const async = require("async");
 
 module.exports = {
     build: buildOutput,
     lib: require("./src/main")
 };
 
-//TODO: buildScripts should probably take a callback for reporting errors?
-function buildOutput(outDir, localeDir) {
+function buildOutput(outDir, localeDir, callback) {
+    if(!localeDir) {
+        callback = outDir;
+        outDir = undefined;
+    }
+    else if(!callback) {
+        callback = localeDir;
+        localeDir = undefined;
+    }
+
     outDir = outDir || path.join(__dirname, "output");
     localeDir = localeDir || path.join(__dirname, "locales");
 
-    //Build js bundle
-    fs.readdir(localeDir, (error, files) => {
-        //TODO: proper callback
+    async.series([
+        (callback) => buildCssBundle(outDir, callback),
+        (callback) => buildJsBundle(outDir, localeDir, callback)
+    ], (error) => {
         if(error) {
-            return console.error("failed to read locale dir", error);
+            return callback(error);
         }
-        files.map(file => file.substring(0, file.length - 5)).forEach(locale => {
+        callback();
+    });
+}
+
+function buildJsBundle(outDir, localeDir, callback) {
+    fs.readdir(localeDir, (error, files) => {
+        if(error) {
+            return callback({
+                trace: new Error("Failed to read locale dir"),
+                error: error
+            });
+        }
+        async.eachSeries(files.map(file => file.substring(0, file.length - 5)), (locale, callback) => {
             console.log("building js for locale", locale);
             let outJs = path.join(outDir, `lib.${locale}.js`);
 
@@ -32,15 +54,27 @@ function buildOutput(outDir, localeDir) {
             b.transform("./browserify-y18n-mustache-inliner");
             b.transform("babelify", { presets: [ "es2015", "babili" ] });
 
-            //TODO: error handle
             let outStream = fs.createWriteStream(outJs);
-            b.bundle().pipe(outStream);
-        });
+            let stream = b.bundle();
+            stream.pipe(outStream);
+            let errored = false;
+            stream.on("error", (error) => {
+                if(errored) return;
+                console.log("- error while building js for locale", locale);
+                errored = true;
+                callback(error);
+            });
+            stream.on("end", () => {
+                console.log("- finished building js for locale", locale);
+                if(!errored) callback();
+            });
+        }, callback);
     });
+}
 
+function buildCssBundle(outDir, callback) {
     let outCss = path.join(outDir, "lib.css");
 
-    //Build css bundle
     console.log("building css");
     let cleanCss = new LessPluginCleanCss({ advanced: true });
     less.render(`@import "main.less";`, {
@@ -48,14 +82,23 @@ function buildOutput(outDir, localeDir) {
         filename: "index.js",
         plugins: [ cleanCss ]
     }, (error, output) => {
-        //TODO: Proper callback
         if(error) {
-            console.error("failed to build less", error);
+            console.log("- error while building css");
+            return callback({ 
+                trace: new Error("Failed to generate css"),
+                error: error
+            });
         }
         fs.writeFile(outCss, output.css, (error) => {
             if(error) {
-                console.error("Failed to save css in", outCss, error);
+                console.log("- error while writing css to file");
+                return callback({
+                    trace: new Error("Failed to write css to file " + outCss),
+                    error: error
+                });
             }
+            console.log("- finished building css");
+            callback();
         });
     });
 }

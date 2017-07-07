@@ -25,7 +25,11 @@
     <div class="did-view-row">
         <div class="did-view-label did-view-label-fullState">
             {{#__}}Open to more members?{{/__}}
-            <div class="did-view-value did-view-value-fullState"></div>
+            <div class="did-view-value did-view-value-fullState">
+                <div class="did-view-value-fullState-lookingForMore" style="display:none;">{{#__}}Looking for more{{/__}}</div>
+                <div class="did-view-value-fullState-openForMore" style="display:none;">{{#__}}Open for more{{/__}}</div>
+                <div class="did-view-value-fullState-full" style="display:none;">{{#__}}Full{{/__}}</div>
+            </div>
         </div>
         <div class="did-view-label did-view-label-expectationsForMembers">
             {{#__}}Expectations for members{{/__}}

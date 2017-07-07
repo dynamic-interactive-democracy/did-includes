@@ -33,28 +33,30 @@ module.exports = (api, integration) => (opts) => {
                     return console.error("Failed to get users or circle to display", error);
                 }
 
+                let selectValueField = (name) => view.querySelector(`.did-view-value-${name}`);
                 let setValue = (name, value) => {
-                    let field = view.querySelector(`.did-view-value-${name}`);
+                    let field = selectValueField(name);
                     if(value) field.innerText = value;
                     else      field.innerHTML = "&mdash;";
                 };
                 let setMarkdownValue = (name, value) => {
-                    let field = view.querySelector(`.did-view-value-${name}`);
+                    let field = selectValueField(name);
                     field.innerHTML = value ? marked(value) : "&mdash;";
                 }
                 
                 let users = result.usersRequest.users;
                 let circle = result.circleRequest.circle;
 
+                selectValueField(`fullState-${circle.fullState}`).style = "";
+
                 setValue("title", circle.name);
                 setMarkdownValue("vision", circle.vision);
                 setMarkdownValue("mission", circle.mission);
                 setMarkdownValue("aim", circle.aim);
-                setValue("fullState", circle.fullState); //TODO: Should be made nicer to read :-)
                 setMarkdownValue("expectationsForMembers", circle.expectationsForMembers);
 
                 let insertDomElements = (name, elements) => {
-                    let field = view.querySelector(`.did-view-value-${name}`);
+                    let field = selectValueField(name);
                     elements.forEach(e => {
                         field.appendChild(e);
                         field.appendChild(createDomNode("br"));

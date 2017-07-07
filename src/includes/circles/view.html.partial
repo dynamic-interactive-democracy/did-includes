@@ -44,6 +44,48 @@
             <div class="did-view-value did-view-value-invited"></div>
         </div>
     </div>
+    <div class="did-view-row did-view-row-double did-procedures-container">
+        <a href="#expand-procedures" class="did-show-procedures-link">{{#__}}Show procedures{{/__}}</a>
+        <a href="#hide-procedures" class="did-hide-procedures-link" style="display:none;">{{#__}}Hide procedures{{/__}}</a>
+        <h2>{{#__}}Procedures{{/__}}</h2>
+        <p>{{#__}}Procedures describe how items (topics, tasks, agreements and roles) are evaluated or handled during a meeting.{{/__}}</p>
+        <div class="did-view-label did-view-label-roleElectionProcedure">
+            {{#__}}Meeting Procedure for Election of Roles{{/__}}
+            <div class="did-view-value did-view-value-roleElectionProcedure"></div>
+        </div>
+        <div class="did-view-label did-view-label-roleEvaluationProcedure">
+            {{#__}}Meeting Procedure for Evaluation of Roles{{/__}}
+            <div class="did-view-value did-view-value-roleEvaluationProcedure"></div>
+        </div>
+        <div class="did-view-label did-view-label-taskMeetingProcedure">
+            {{#__}}Meeting Procedure for Operational Meetings (tasks){{/__}}
+            <div class="did-view-value did-view-value-taskMeetingProcedure"></div>
+        </div>
+        <div class="did-view-label did-view-label-topicExplorationStageProcedure">
+            {{#__}}Meeting Procedure - Topics at Exploration Stage{{/__}}
+            <div class="did-view-value did-view-value-topicExplorationStageProcedure"></div>
+        </div>
+        <div class="did-view-label did-view-label-topicPictureFormingStageProcedure">
+            {{#__}}Meeting Procedure - Topics at Picture Forming Stage{{/__}}
+            <div class="did-view-value did-view-value-topicPictureFormingStageProcedure"></div>
+        </div>
+        <div class="did-view-label did-view-label-topicProposalShapingStageProcedure">
+            {{#__}}Meeting Procedure - Topics at Proposal Shaping Stage{{/__}}
+            <div class="did-view-value did-view-value-topicProposalShapingStageProcedure"></div>
+        </div>
+        <div class="did-view-label did-view-label-topicDecisionMakingStageProcedure">
+            {{#__}}Meeting Procedure - Topics at Decision Making Stage{{/__}}
+            <div class="did-view-value did-view-value-topicDecisionMakingStageProcedure"></div>
+        </div>
+        <div class="did-view-label did-view-label-topicAgreementStageProcedure">
+            {{#__}}Meeting procedure: Topics at Agreement Stage{{/__}}
+            <div class="did-view-value did-view-value-topicAgreementStageProcedure"></div>
+        </div>
+        <div class="did-view-label did-view-label-agreementEvaluationProcedure">
+            {{#__}}Meeting procedure - Evaluation of agreement{{/__}}
+            <div class="did-view-value did-view-value-agreementEvaluationProcedure"></div>
+        </div>
+    </div>
     <div class="did-overlay">
         <div class="did-overlay-message did-overlay-message-loading">{{#__}}Loading circle...{{/__}}</div>
     </div>

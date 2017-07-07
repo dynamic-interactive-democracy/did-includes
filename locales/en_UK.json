@@ -24,5 +24,18 @@
   "Failed to update circle.": "Failed to update circle.",
   "Circle updated!": "Circle updated!",
   "Edit circle": "Edit circle",
-  "Update circle": "Update circle"
+  "Update circle": "Update circle",
+  "Show procedures": "Show procedures",
+  "Hide procedures": "Hide procedures",
+  "Procedures": "Procedures",
+  "Procedures describe how items (topics, tasks, agreements and roles) are evaluated or handled during a meeting.": "Procedures describe how items (topics, tasks, agreements and roles) are evaluated or handled during a meeting.",
+  "Meeting Procedure for Election of Roles": "Meeting Procedure for Election of Roles",
+  "Meeting Procedure for Evaluation of Roles": "Meeting Procedure for Evaluation of Roles",
+  "Meeting Procedure for Operational Meetings (tasks)": "Meeting Procedure for Operational Meetings (tasks)",
+  "Meeting Procedure - Topics at Exploration Stage": "Meeting Procedure - Topics at Exploration Stage",
+  "Meeting Procedure - Topics at Picture Forming Stage": "Meeting Procedure - Topics at Picture Forming Stage",
+  "Meeting Procedure - Topics at Proposal Shaping Stage": "Meeting Procedure - Topics at Proposal Shaping Stage",
+  "Meeting Procedure - Topics at Decision Making Stage": "Meeting Procedure - Topics at Decision Making Stage",
+  "Meeting procedure: Topics at Agreement Stage": "Meeting procedure: Topics at Agreement Stage",
+  "Meeting procedure - Evaluation of agreement": "Meeting procedure - Evaluation of agreement"
 }

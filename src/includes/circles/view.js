@@ -47,6 +47,8 @@ module.exports = (api, integration) => (opts) => {
                 let users = result.usersRequest.users;
                 let circle = result.circleRequest.circle;
 
+                console.log("loaded circle", circle);
+
                 selectValueField(`fullState-${circle.fullState}`).style = "";
 
                 setValue("title", circle.name);
@@ -77,6 +79,35 @@ module.exports = (api, integration) => (opts) => {
                 else {
                     view.removeChild(editLink);
                 }
+
+                //Procedures
+                setMarkdownValue("roleElectionProcedure", circle.roleElectionProcedure);
+                setMarkdownValue("roleEvaluationProcedure", circle.roleEvaluationProcedure);
+                setMarkdownValue("taskMeetingProcedure", circle.taskMeetingProcedure);
+                setMarkdownValue("topicExplorationStageProcedure", circle.topicExplorationStageProcedure);
+                setMarkdownValue("topicPictureFormingStageProcedure", circle.topicPictureFormingStageProcedure);
+                setMarkdownValue("topicProposalShapingStageProcedure", circle.topicProposalShapingStageProcedure);
+                setMarkdownValue("topicDecisionMakingStageProcedure", circle.topicDecisionMakingStageProcedure);
+                setMarkdownValue("topicAgreementStageProcedure", circle.topicAgreementStageProcedure);
+                setMarkdownValue("agreementEvaluationProcedure", circle.agreementEvaluationProcedure);
+
+                let proceduresBox = view.querySelector(".did-procedures-container");
+                let showProceduresLink = view.querySelector(".did-show-procedures-link");
+                let hideProceduresLink = view.querySelector(".did-hide-procedures-link");
+                showProceduresLink.addEventListener("click", e => {
+                    e.preventDefault();
+                    proceduresBox.style = "height:auto;box-shadow:none;";
+                    showProceduresLink.style = "display:none;";
+                    hideProceduresLink.style = "";
+                    return false;
+                });
+                hideProceduresLink.addEventListener("click", e => {
+                    e.preventDefault();
+                    proceduresBox.style = "";
+                    hideProceduresLink.style = "display:none;";
+                    showProceduresLink.style = "";
+                    return false;
+                });
 
                 overlay.hide();
             });

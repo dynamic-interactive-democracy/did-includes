@@ -1,6 +1,6 @@
 const createDomNode = require("./createDomNode");
 
-module.exports = (id, name, state, removeHook) => {
+module.exports = (id, name, membersSelect, membersList, removeHook) => {
     let memberElement = createDomNode("div", { class: "did-invite-member", text: name });
     let dismissButton = createDomNode("div", { class: "did-uninvite-member-button" });
 
@@ -10,10 +10,10 @@ module.exports = (id, name, state, removeHook) => {
             if(error) {
                 return console.error("Failed to remove an invited member", error);
             }
-            state.membersList.removeChild(memberElement);
+            membersList.removeChild(memberElement);
             let newOpt = createDomNode("option", { value: id, text: name });
-            let elementAlphanumericallyFollowing = getElementAlphaAfter(state.membersSelect, name);
-            state.membersSelect.insertBefore(newOpt, elementAlphanumericallyFollowing);
+            let elementAlphanumericallyFollowing = getElementAlphaAfter(membersSelect, name);
+            membersSelect.insertBefore(newOpt, elementAlphanumericallyFollowing);
         });
         return false;
     });

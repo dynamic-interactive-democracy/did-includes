@@ -19,20 +19,9 @@ module.exports = (api, integration) => (opts) => {
                 throw new Error("Missing circle ID for circleEdit include. You should provide `id` as an option when creating the include.");
             }
 
+            let inviteMembersSelect = form.querySelector("[name=inviteMembers]");
+            let inviteMembersList = form.querySelector(".did-invited-members-list");
             let membersList = form.querySelector(".did-members-list");
-            let members = [];
-
-            let inviteMembersRemoverState = {
-                membersSelect: form.querySelector("[name=inviteMembers]"),
-                membersList: form.querySelector(".did-invited-members-list"),
-                members: []
-            };
-
-            let membersRemoverState = {
-                membersSelect: inviteMembersRemoverState.membersSelect,
-                membersList: form.querySelector(".did-members-list"),
-                members: []
-            };
 
             parallel({
                 usersRequest: (callback) => api.users.get(callback),
@@ -49,22 +38,26 @@ module.exports = (api, integration) => (opts) => {
                 }
 
                 let setValue = (name, value) => form[name].value = value;
+                let transferValueByName = (name) => setValue(name, circle[name]);
+                let transferValuesByName = (names) => names.forEach(transferValueByName);
                 setValue("title", circle.name);
-                setValue("vision", circle.vision);
-                setValue("mission", circle.mission);
-                setValue("aim", circle.aim);
-                setValue("fullState", circle.fullState);
-                setValue("expectationsForMembers", circle.expectationsForMembers);
-
-                setValue("roleElectionProcedure", circle.roleElectionProcedure);
-                setValue("roleEvaluationProcedure", circle.roleEvaluationProcedure);
-                setValue("taskMeetingProcedure", circle.taskMeetingProcedure);
-                setValue("topicExplorationStageProcedure", circle.topicExplorationStageProcedure);
-                setValue("topicPictureFormingStageProcedure", circle.topicPictureFormingStageProcedure);
-                setValue("topicProposalShapingStageProcedure", circle.topicProposalShapingStageProcedure);
-                setValue("topicDecisionMakingStageProcedure", circle.topicDecisionMakingStageProcedure);
-                setValue("topicAgreementStageProcedure", circle.topicAgreementStageProcedure);
-                setValue("agreementEvaluationProcedure", circle.agreementEvaluationProcedure);
+                transferValuesByName([
+                    "vision",
+                    "mission",
+                    "aim",
+                    "fullState",
+                    "expectationsForMembers",
+                    //Procedures:
+                    "roleElectionProcedure",
+                    "roleEvaluationProcedure",
+                    "taskMeetingProcedure",
+                    "topicExplorationStageProcedure",
+                    "topicPictureFormingStageProcedure",
+                    "topicProposalShapingStageProcedure",
+                    "topicDecisionMakingStageProcedure",
+                    "topicAgreementStageProcedure",
+                    "agreementEvaluationProcedure"
+                ]);
 
                 let otherUsers = users
                                 .filter(user => user.userId != api.getCurrentUserId())
@@ -79,17 +72,17 @@ module.exports = (api, integration) => (opts) => {
                 let memberUsers = users.filter(user => circle.members.indexOf(user.userId) !== -1);
 
                 let inviteOptions = invitableUsers.map(user => `<option value="${user.userId}">${user.name}</option>`).join("");
-                inviteMembersRemoverState.membersSelect.innerHTML = `<option></option>` + inviteOptions;
+                inviteMembersSelect.innerHTML = `<option></option>` + inviteOptions;
                 
                 let contactPersonOptions = users.map(user => `<option value="${user.userId}">${user.name}</option>`).join("");
                 let contactPersonSelect = form.contactPerson;
                 contactPersonSelect.innerHTML = contactPersonOptions;
                 contactPersonSelect.value = circle.contactPerson;
 
-                addRemovableMemberElementsToList(api, opts.id, memberUsers, membersRemoverState);
-                addRemovableMemberElementsToList(api, opts.id, invitedUsers, inviteMembersRemoverState);
+                addRemovableMemberElementsToList(api, opts.id, memberUsers, inviteMembersSelect, membersList);
+                addRemovableMemberElementsToList(api, opts.id, invitedUsers, inviteMembersSelect, inviteMembersList);
 
-                setUpMemberInviteSelect(inviteMembersRemoverState, {
+                setUpMemberInviteSelect(inviteMembersSelect, inviteMembersList, {
                     invite: (userId, callback) => api.circles.members.invite(opts.id, userId, callback),
                     remove: (userId, callback) => api.circles.members.remove(opts.id, userId, callback)
                 });
@@ -106,9 +99,9 @@ module.exports = (api, integration) => (opts) => {
     };
 };
 
-function addRemovableMemberElementsToList(api, circleId, users, state) {
-    users.map(user => createRemovableMemberElement(user.userId, user.name, state, (userId, callback) => api.circles.members.remove(circleId, userId, callback)))
-         .forEach((memberElement) => state.membersList.appendChild(memberElement));
+function addRemovableMemberElementsToList(api, circleId, users, membersSelect, membersList) {
+    users.map(user => createRemovableMemberElement(user.userId, user.name, membersSelect, membersList, (userId, callback) => api.circles.members.remove(circleId, userId, callback)))
+         .forEach((memberElement) => membersList.appendChild(memberElement));
 }
 
 function sendUpdateCircleRequest(api, integration, id, form) {
@@ -132,7 +125,7 @@ function validateData(form) {
     let getValue = (name) => form[name].value;
 
     let valid = true;
-    
+
     let errors = {};
     let name = getValue("title");
     let vision = getValue("vision");

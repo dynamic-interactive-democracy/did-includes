@@ -16,11 +16,9 @@ module.exports = (api, integration) => (opts) => {
                 }
             }
 
-            let state = {
-                membersSelect: form.querySelector("[name=inviteMembers]"),
-                membersList: form.querySelector(".did-invited-members-list"),
-                members: []
-            };
+            let invites = [];
+            let membersSelect = form.querySelector("[name=inviteMembers]");
+            let membersList = form.querySelector(".did-invited-members-list");
 
             api.users.get((error, data) => {
                 if(error) {
@@ -36,17 +34,17 @@ module.exports = (api, integration) => (opts) => {
                                 })
                                 .map(user => `<option value="${user.userId}">${user.name}</option>`)
                                 .join("");
-                state.membersSelect.innerHTML = `<option></option>` + options;
+                membersSelect.innerHTML = `<option></option>` + options;
 
-                setUpMemberInviteSelect(state, {
-                    invite: (id, callback) => { state.members.push(id); setTimeout(callback); },
-                    remove: (id, callback) => { state.members = state.members.filter(invitedId => invitedId != id); setTimeout(callback); }
+                setUpMemberInviteSelect(membersSelect, membersList, {
+                    invite: (id, callback) => { invites.push(id); setTimeout(callback); },
+                    remove: (id, callback) => { invites = invites.filter(invitedId => invitedId != id); setTimeout(callback); }
                 });
             });
 
             form.addEventListener("submit", (e) => {
                 e.preventDefault();
-                sendCreateCircleRequest(api, integration, form, state.members);
+                sendCreateCircleRequest(api, integration, form, invites);
                 return false;
             });
         }

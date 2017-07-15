@@ -3,6 +3,7 @@ const openurl = require("openurl");
 const staticView = require("./staticView");
 const path = require("path");
 const circleTestsApp = require("./circles/app");
+const topicsTestsApp = require("./topics/app");
 const pkg = require("../package.json");
 const didIncludes = require("../index");
 
@@ -15,6 +16,7 @@ let app = express();
 app.get("/", staticView(path.join(__dirname, "index", "view.html")));
 app.use("/assets", express.static(path.join(__dirname, "..", "output")));
 app.use("/circles", circleTestsApp());
+app.use("/topics", topicsTestsApp());
 
 console.log("+ Launching manual test");
 

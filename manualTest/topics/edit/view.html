@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>circles/view manual test</title>
+        <title>circles/edit manual test</title>
         <link rel="stylesheet" type="text/css" href="/assets/lib.css">
         <script src="/assets/lib.en_US.js"></script>
     </head>
@@ -11,20 +11,15 @@
             var container = document.querySelector(".circle-container");
 
             var did = require("did")("http://localhost:3001", {
-                users: {
-                    view: (id) => alert("viewing user " + id + " not supported.")
-                },
                 circles: {
+                    view: (id) => location.href = location.protocol + "//" + location.host + "/circles/view?id=" + id,
                     edit: (id) => location.href = location.protocol + "//" + location.host + "/circles/edit?id=" + id
-                },
-                topics: {
-                    create: (circleId) => location.href = location.protocol + "//" + location.host + "/topics/create?circleId=" + circleId
                 }
             });
             did.api.asUser("sphinx", "399810c258af4960eca01949ff7a6ff7dbf2c130983f67347cb18bf979b9aa6af6354402001899ac9215e53411c8e7bbaebb62360b26678a98371d39461f3259");
             var circleId = getParameterByName("id");
             
-            let include = did.includes.circleView({ id: circleId });
+            let include = did.includes.circleEdit({ id: circleId });
             include.renderIn(document.querySelector(".circle-container"));
 
             function getParameterByName(name, url) {

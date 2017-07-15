@@ -6,24 +6,28 @@ module.exports = (url) => {
         url: url || "https://did-api-alpha.deranged.dk",
         user: { id: null, authKey: null }
     };
+    let r = request.bind(this, state);
     return {
         asUser: (id, authKey) => setUser(state, id, authKey),
         getCurrentUserId: () => state.user.id,
         user: {
-            get: (callback) => request(state, "GET", "/user", callback)
+            get: (callback) => r("GET", "/user", callback)
         },
         users: {
-            get: (callback) => request(state, "GET", "/users", callback),
-            create: (data, callback) => request(state, "POST", "/users", data, callback)
+            get: (callback) => r("GET", "/users", callback),
+            create: (data, callback) => r("POST", "/users", data, callback)
         },
         circles: {
-            create: (data, callback) => request(state, "POST", "/circles", data, callback),
-            update: (id, data, callback) => request(state, "PUT", `/circles/${id}`, data, callback),
-            get: (id, callback) => request(state, "GET", `/circles/${id}`, callback),
-            getAll: (callback) => request(state, "GET", `/circles`, callback),
+            create: (data, callback) => r("POST", "/circles", data, callback),
+            update: (id, data, callback) => r("PUT", `/circles/${id}`, data, callback),
+            get: (id, callback) => r("GET", `/circles/${id}`, callback),
+            getAll: (callback) => r("GET", `/circles`, callback),
             members: {
-                invite: (circleId, userId, callback) => request(state, "POST", `/circles/${circleId}/members`, { userId }, callback),
-                remove: (circleId, userId, callback) => request(state, "DELETE", `/circles/${circleId}/members/${userId}`, callback)
+                invite: (circleId, userId, callback) => r("POST", `/circles/${circleId}/members`, { userId }, callback),
+                remove: (circleId, userId, callback) => r("DELETE", `/circles/${circleId}/members/${userId}`, callback)
+            },
+            topics: {
+                create: (circleId, data, callback) => r("POST", `/circles/${circleId}/topics`, data, callback)
             }
         }
     };

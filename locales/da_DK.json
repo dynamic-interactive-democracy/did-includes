@@ -25,9 +25,9 @@
   "Circle updated!": "Cirkel opdateret!",
   "Edit circle": "Rediger cirkel",
   "Update circle": "Opdater cirkel",
-  "Show procedures": "Show procedures",
-  "Hide procedures": "Hide procedures",
-  "Procedures": "Procedures",
+  "Show procedures": "Vis procedurer",
+  "Hide procedures": "Skjul procedurer",
+  "Procedures": "Procedurer",
   "Procedures describe how items (topics, tasks, agreements and roles) are evaluated or handled during a meeting.": "Procedures describe how items (topics, tasks, agreements and roles) are evaluated or handled during a meeting.",
   "Meeting Procedure for Election of Roles": "Meeting Procedure for Election of Roles",
   "Meeting Procedure for Evaluation of Roles": "Meeting Procedure for Evaluation of Roles",
@@ -37,5 +37,10 @@
   "Meeting Procedure - Topics at Proposal Shaping Stage": "Meeting Procedure - Topics at Proposal Shaping Stage",
   "Meeting Procedure - Topics at Decision Making Stage": "Meeting Procedure - Topics at Decision Making Stage",
   "Meeting procedure: Topics at Agreement Stage": "Meeting procedure: Topics at Agreement Stage",
-  "Meeting procedure - Evaluation of agreement": "Meeting procedure - Evaluation of agreement"
+  "Meeting procedure - Evaluation of agreement": "Meeting procedure - Evaluation of agreement",
+  "Why should this topic be discussed?": "Hvorfor er det relevant at diskutere emnet?",
+  "Create topic": "Opret emne",
+  "Creating topic...": "Opretter emne...",
+  "Failed to create topic.": "Der opstod en fejl under oprettelse af emnet.",
+  "Topic created!": "Emne oprettet!"
 }

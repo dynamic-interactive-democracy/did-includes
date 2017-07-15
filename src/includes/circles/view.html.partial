@@ -44,6 +44,9 @@
             <div class="did-view-value did-view-value-invited"></div>
         </div>
     </div>
+    <div class="did-view-row did-view-row-double did-circle-items-container">
+        <a class="did-btn did-add-topic-link" href="#add-topic">Add topic</a>
+    </div>
     <div class="did-view-row did-view-row-double did-procedures-container">
         <a href="#expand-procedures" class="did-show-procedures-link">{{#__}}Show procedures{{/__}}</a>
         <a href="#hide-procedures" class="did-hide-procedures-link" style="display:none;">{{#__}}Hide procedures{{/__}}</a>

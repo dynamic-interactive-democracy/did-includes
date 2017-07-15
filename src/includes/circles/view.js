@@ -109,6 +109,13 @@ module.exports = (api, integration) => (opts) => {
                     return false;
                 });
 
+                let addTopicLink = view.querySelector(".did-add-topic-link");
+                addTopicLink.addEventListener("click", e => {
+                    e.preventDefault();
+                    integration.topics.create(opts.id);
+                    return false;
+                });
+
                 overlay.hide();
             });
         }

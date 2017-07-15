@@ -37,5 +37,10 @@
   "Meeting Procedure - Topics at Proposal Shaping Stage": "Meeting Procedure - Topics at Proposal Shaping Stage",
   "Meeting Procedure - Topics at Decision Making Stage": "Meeting Procedure - Topics at Decision Making Stage",
   "Meeting procedure: Topics at Agreement Stage": "Meeting procedure: Topics at Agreement Stage",
-  "Meeting procedure - Evaluation of agreement": "Meeting procedure - Evaluation of agreement"
+  "Meeting procedure - Evaluation of agreement": "Meeting procedure - Evaluation of agreement",
+  "Why should this topic be discussed?": "Why should this topic be discussed?",
+  "Create topic": "Create topic",
+  "Creating topic...": "Creating topic...",
+  "Failed to create topic.": "Failed to create topic.",
+  "Topic created!": "Topic created!"
 }

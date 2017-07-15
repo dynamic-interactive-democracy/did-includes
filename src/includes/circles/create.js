@@ -3,6 +3,7 @@ const locale = require("../../locale");
 const y18nMustacheReader = require("../../y18n-mustache-reader");
 const getOverlay = require("../getFormOverlay");
 const setUpMemberInviteSelect = require("../setUpMemberInviteSelect");
+const prefillFields = require("../prefillFields");
 
 module.exports = (api, integration) => (opts) => {
     return {
@@ -50,18 +51,6 @@ module.exports = (api, integration) => (opts) => {
         }
     };
 };
-
-function prefillFields(form, fill) {
-    Object.keys(fill).forEach((key) => {
-        let element = form.querySelector(`[name=${key}]`);
-        if(!element) {
-            return console.warn("[did/create-circle-include] Tried to prefill", key, "with value", fill[key], "but no such input element exists in the form.");
-        }
-        element.value = fill[key];
-        //This has been verified to work for: input, textarea, select
-        //TODO: Not yet verified: checkbox, radio
-    });
-}
 
 function sendCreateCircleRequest(api, integration, form, invitedMembers) {
     let validation = validateData(form, invitedMembers);

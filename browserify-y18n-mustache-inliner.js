@@ -34,7 +34,7 @@ module.exports = (file, opts) => {
     return sm;
 
     function readSync(locale, filePath) {
-        let result = y18nMustacheReader.readSync(locale, filePath);
+        let result = y18nMustacheReader.readSync(locale, filePath, true);
 
         return streamify(result, { encoding: 'utf8' })
             .on('error', error => sm.emit('error', error))

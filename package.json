@@ -10,6 +10,7 @@
     "babelify": "^7.3.0",
     "browserify": "^14.4.0",
     "browserify-transform-tools": "^1.7.0",
+    "html-minifier": "^3.5.2",
     "less": "^2.7.2",
     "less-plugin-clean-css": "^1.5.1",
     "marked": "^0.3.6",

@@ -22,6 +22,7 @@ function buildOutput(outDir, localeDir, callback) {
 
     outDir = outDir || path.join(__dirname, "output");
     localeDir = localeDir || path.join(__dirname, "locales");
+    callback = callback || (error => { if(error) console.error("Uncaught error on build", error); });
 
     async.series([
         (callback) => buildCssBundle(outDir, callback),

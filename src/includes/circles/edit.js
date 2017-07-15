@@ -56,6 +56,16 @@ module.exports = (api, integration) => (opts) => {
                 setValue("fullState", circle.fullState);
                 setValue("expectationsForMembers", circle.expectationsForMembers);
 
+                setValue("roleElectionProcedure", circle.roleElectionProcedure);
+                setValue("roleEvaluationProcedure", circle.roleEvaluationProcedure);
+                setValue("taskMeetingProcedure", circle.taskMeetingProcedure);
+                setValue("topicExplorationStageProcedure", circle.topicExplorationStageProcedure);
+                setValue("topicPictureFormingStageProcedure", circle.topicPictureFormingStageProcedure);
+                setValue("topicProposalShapingStageProcedure", circle.topicProposalShapingStageProcedure);
+                setValue("topicDecisionMakingStageProcedure", circle.topicDecisionMakingStageProcedure);
+                setValue("topicAgreementStageProcedure", circle.topicAgreementStageProcedure);
+                setValue("agreementEvaluationProcedure", circle.agreementEvaluationProcedure);
+
                 let otherUsers = users
                                 .filter(user => user.userId != api.getCurrentUserId())
                                 .sort((a,b) => {
@@ -89,7 +99,7 @@ module.exports = (api, integration) => (opts) => {
 
             form.addEventListener("submit", (e) => {
                 e.preventDefault();
-                sendUpdateCircleRequest(api, integration, opts.id, form, inviteMembersRemoverState.members);
+                sendUpdateCircleRequest(api, integration, opts.id, form);
                 return false;
             });
         }
@@ -122,6 +132,7 @@ function validateData(form) {
     let getValue = (name) => form[name].value;
 
     let valid = true;
+    
     let errors = {};
     let name = getValue("title");
     let vision = getValue("vision");
@@ -131,12 +142,25 @@ function validateData(form) {
     let expectationsForMembers = getValue("expectationsForMembers");
     let contactPerson = getValue("contactPerson");
 
+    let roleElectionProcedure = getValue("roleElectionProcedure");
+    let roleEvaluationProcedure = getValue("roleEvaluationProcedure");
+    let taskMeetingProcedure = getValue("taskMeetingProcedure");
+    let topicExplorationStageProcedure = getValue("topicExplorationStageProcedure");
+    let topicPictureFormingStageProcedure = getValue("topicPictureFormingStageProcedure");
+    let topicProposalShapingStageProcedure = getValue("topicProposalShapingStageProcedure");
+    let topicDecisionMakingStageProcedure = getValue("topicDecisionMakingStageProcedure");
+    let topicAgreementStageProcedure = getValue("topicAgreementStageProcedure");
+    let agreementEvaluationProcedure = getValue("agreementEvaluationProcedure");
+
     //TODO: actually validate
 
     if(valid) {
         return {
             valid: true,
-            data: { name, vision, mission, aim, fullState, expectationsForMembers, contactPerson }
+            data: { name, vision, mission, aim, fullState, expectationsForMembers, contactPerson,
+                roleElectionProcedure, roleEvaluationProcedure, taskMeetingProcedure, topicExplorationStageProcedure,
+                topicPictureFormingStageProcedure, topicProposalShapingStageProcedure, topicDecisionMakingStageProcedure,
+                topicAgreementStageProcedure, agreementEvaluationProcedure }
         };
     }
     return { valid, errors };

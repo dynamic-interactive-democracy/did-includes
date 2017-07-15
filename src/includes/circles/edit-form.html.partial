@@ -48,6 +48,45 @@
         </label>
         <div class="did-invited-members-list"></div>
     </div>
+    <div class="did-form-row">
+        <h2>{{#__}}Procedures{{/__}}</h2>
+        <label for="roleElectionProcedure">
+            {{#__}}Meeting Procedure for Election of Roles{{/__}}
+            <textarea name="roleElectionProcedure" class="did-markdown-field"></textarea>
+        </label>
+        <label for="roleEvaluationProcedure">
+            {{#__}}Meeting Procedure for Evaluation of Roles{{/__}}
+            <textarea name="roleEvaluationProcedure" class="did-markdown-field"></textarea>
+        </label>
+        <label for="taskMeetingProcedure">
+            {{#__}}Meeting Procedure for Operational Meetings (tasks){{/__}}
+            <textarea name="taskMeetingProcedure" class="did-markdown-field"></textarea>
+        </label>
+        <label for="topicExplorationStageProcedure">
+            {{#__}}Meeting Procedure - Topics at Exploration Stage{{/__}}
+            <textarea name="topicExplorationStageProcedure" class="did-markdown-field"></textarea>
+        </label>
+        <label for="topicPictureFormingStageProcedure">
+            {{#__}}Meeting Procedure - Topics at Picture Forming Stage{{/__}}
+            <textarea name="topicPictureFormingStageProcedure" class="did-markdown-field"></textarea>
+        </label>
+        <label for="topicProposalShapingStageProcedure">
+            {{#__}}Meeting Procedure - Topics at Proposal Shaping Stage{{/__}}
+            <textarea name="topicProposalShapingStageProcedure" class="did-markdown-field"></textarea>
+        </label>
+        <label for="topicDecisionMakingStageProcedure">
+            {{#__}}Meeting Procedure - Topics at Decision Making Stage{{/__}}
+            <textarea name="topicDecisionMakingStageProcedure" class="did-markdown-field"></textarea>
+        </label>
+        <label for="topicAgreementStageProcedure">
+            {{#__}}Meeting procedure: Topics at Agreement Stage{{/__}}
+            <textarea name="topicAgreementStageProcedure" class="did-markdown-field"></textarea>
+        </label>
+        <label for="agreementEvaluationProcedure">
+            {{#__}}Meeting procedure - Evaluation of agreement{{/__}}
+            <textarea name="agreementEvaluationProcedure" class="did-markdown-field"></textarea>
+        </label>
+    </div>
     <button>{{#__}}Update circle{{/__}}</button>
     <div class="did-overlay">
         <div class="did-overlay-message did-overlay-message-loading">{{#__}}Loading form...{{/__}}</div>

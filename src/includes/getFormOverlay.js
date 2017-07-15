@@ -34,8 +34,8 @@ module.exports = (form) => {
         success: (callback) => {
             showMsg(successMsg);
             setTimeout(() => {
-                hide();
                 callback();
+                hide();
             }, 1200);
         },
         hide: hide

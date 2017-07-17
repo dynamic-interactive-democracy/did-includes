@@ -7,7 +7,8 @@ const async = require("async");
 
 module.exports = {
     build: buildOutput,
-    lib: require("./src/main")
+    lib: require("./src/main"),
+    libWithoutMarkdownParser: require("./src/main-no-md")
 };
 
 function buildOutput(outDir, localeDir, callback) {
@@ -44,31 +45,39 @@ function buildJsBundle(outDir, localeDir, callback) {
             });
         }
         async.eachSeries(files.map(file => file.substring(0, file.length - 5)), (locale, callback) => {
-            console.log("building js for locale", locale);
-            let outJs = path.join(outDir, `lib.${locale}.js`);
+            async.eachSeries([true, false], (includeMarkdown, callback) => {
+                console.log("building js for locale", locale, includeMarkdown ? "with markdown" : "without markdown");
+                let jsFileName = `lib.${locale}${includeMarkdown ? "" : ".no-md"}.js`;
+                let outJs = path.join(outDir, jsFileName);
 
-            let b = browserify();
+                let b = browserify();
 
-            b.require("./src/main.js", { expose: "did" });
-            b.transform("./browserify-path-inliner");
-            b.transform("./browserify-locale-inliner", { locale: locale });
-            b.transform("./browserify-y18n-mustache-inliner");
-            b.transform("babelify", { presets: [ "es2015", "babili" ] });
+                if(includeMarkdown) {
+                    b.require("./src/main.js", { expose: "did" });
+                }
+                else {
+                    b.require("./src/main-no-md.js", { expose: "did" });
+                }
+                b.transform("./browserify-path-inliner");
+                b.transform("./browserify-locale-inliner", { locale: locale });
+                b.transform("./browserify-y18n-mustache-inliner");
+                b.transform("babelify", { presets: [ "es2015", "babili" ] });
 
-            let outStream = fs.createWriteStream(outJs);
-            let stream = b.bundle();
-            stream.pipe(outStream);
-            let errored = false;
-            stream.on("error", (error) => {
-                if(errored) return;
-                console.log("- error while building js for locale", locale);
-                errored = true;
-                callback(error);
-            });
-            stream.on("end", () => {
-                console.log("- finished building js for locale", locale);
-                if(!errored) callback();
-            });
+                let outStream = fs.createWriteStream(outJs);
+                let stream = b.bundle();
+                stream.pipe(outStream);
+                let errored = false;
+                stream.on("error", (error) => {
+                    if(errored) return;
+                    console.log("- error while building", jsFileName);
+                    errored = true;
+                    callback(error);
+                });
+                stream.on("end", () => {
+                    console.log("- finished building", jsFileName);
+                    if(!errored) callback();
+                });
+            }, callback);
         }, callback);
     });
 }

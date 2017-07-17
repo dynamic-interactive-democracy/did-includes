@@ -4,15 +4,9 @@ const y18nMustacheReader = require("../../y18n-mustache-reader");
 const parallel = require("../../tiny-parallel");
 const getOverlay = require("../getViewOverlay");
 const createDomNode = require("../createDomNode");
-const marked = require("marked");
+const renderMembers = require("../renderMembers");
 
-//Strip out HTML sections in the Markdown.
-const markedRenderer = new marked.Renderer();
-markedRenderer.html = (html) => "";
-
-marked.setOptions({ renderer: markedRenderer });
-
-module.exports = (api, integration) => (opts) => {
+module.exports = (api, integration, marked) => (opts) => {
     return {
         renderIn: (container) => {
             container.innerHTML = y18nMustacheReader.readSync(locale(), path.join(__dirname, "view.html.partial"));
@@ -46,8 +40,6 @@ module.exports = (api, integration) => (opts) => {
                 
                 let users = result.usersRequest.users;
                 let circle = result.circleRequest.circle;
-
-                console.log("loaded circle", circle);
 
                 selectValueField(`fullState-${circle.fullState}`).style = "";
 
@@ -121,22 +113,3 @@ module.exports = (api, integration) => (opts) => {
         }
     };
 };
-
-function renderMembers(userIds, users, integration) {
-    return userIds.map(userId => {
-        let user = users.find(user => user.userId == userId);
-        return renderUserLink(user, integration);
-    });
-}
-
-function renderUserLink(user, integration) {
-    let box = createDomNode("div");
-    box.innerHTML = `<a href="#view-user" data-userId="${user.userId}" class="did-user-link">${user.name}</a>`;
-    let link = box.firstChild;
-    link.addEventListener("click", (e) => {
-        e.preventDefault();
-        integration.users.view(user.userId);
-        return false;
-    });
-    return link;
-}

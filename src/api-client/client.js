@@ -27,7 +27,9 @@ module.exports = (url) => {
                 remove: (circleId, userId, callback) => r("DELETE", `/circles/${circleId}/members/${userId}`, callback)
             },
             topics: {
-                create: (circleId, data, callback) => r("POST", `/circles/${circleId}/topics`, data, callback)
+                create: (circleId, data, callback) => r("POST", `/circles/${circleId}/topics`, data, callback),
+                get: (circleId, id, callback) => r("GET", `/circles/${circleId}/topics/${id}`, callback),
+                getAll: (circleId, callback) => r("GET", `/circles/${circleId}/topics`, callback)
             }
         }
     };

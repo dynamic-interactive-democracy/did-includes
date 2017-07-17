@@ -103,7 +103,7 @@
     height: 0;
     overflow: visible;
 }
-.did-edit-link, .did-show-procedures-link, .did-hide-procedures-link, .did-btn {
+.did-edit-link, .did-show-procedures-link, .did-hide-procedures-link, .did-back-to-circle-link, .did-btn {
     font-size: 0.8em;
     background: rgb(230,230,230);
     border: 1px solid rgb(180,180,180);
@@ -112,11 +112,6 @@
     text-decoration: none;
     padding: 4px 6px;
     display: inline-block;
-}
-.did-edit-link {
-    position: absolute;
-    top: 0;
-    right: 0;
 }
 .did-procedures-container {
     height: 40px;
@@ -128,4 +123,73 @@
 }
 .did-hide-procedures-link:before {
     content: '- ';
+}
+.did-topic-stage {
+    color: rgb(100,100,100);
+    font-weight: normal;
+
+    &:before {
+        content: '⋯ ';
+        display: inline-block;
+        width: 20px;
+        text-align: center;
+    }
+
+    &.current {
+        font-weight: bold;
+        color: black;
+
+        &:before {
+            content: '○ ';
+            font-weight: normal;
+        }
+    }
+
+    &.done:before {
+        content: '✔ ';
+    }
+}
+.did-big-title {
+    font-size: 2em;
+}
+
+.did-circle-items-container {
+    margin: 20px 0;
+}
+.did-circle-items-container-tab {
+    font-size: 0.8em;
+    background: rgb(230,230,230);
+    border: 1px solid rgb(180,180,180);
+    color: inherit;
+    text-decoration: none;
+    padding: 4px 6px;
+    display: inline-block;
+    border-radius: 4px 4px 0 0;
+    position: relative;
+    z-index: 1;
+    transform: translateY(1px);
+
+    &.selected {
+        background: white;
+        border-bottom: 1px solid white;;
+    }
+}
+.did-circle-items-container-item-list {
+    border: 1px solid rgb(180,180,180);
+    min-height: 40px;
+}
+.did-circle-item {
+    display: block;
+    text-decoration: inherit;
+    color: inherit;
+    margin: 10px 10px;
+    padding: 10px 2px;
+    border-bottom: 1px solid rgb(180,180,180);
+    font-size: 0.8em;
+
+    &:last-child {
+        border-bottom: none;
+    }
+    h2 { margin-bottom: 0; }
+    p { margin-top: 0; }
 }

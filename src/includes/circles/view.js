@@ -108,6 +108,45 @@ module.exports = (api, integration, marked) => (opts) => {
                     return false;
                 });
 
+                //Set up item tabs
+                let itemList = view.querySelector(".did-circle-items-container-item-list");
+                let tabs = view.querySelectorAll(".did-circle-items-container-tab");
+                let selectedTab = tabs[0];
+                let selectTab = (tab) => {
+                    selectedTab.classList = "did-circle-items-container-tab";
+                    tab.classList += " selected";
+                    selectedTab = tab;
+                }
+                let itemLoaders = {
+                    "roles": (callback) => callback(null, []),
+                    "tasks": (callback) => callback(null, []),
+                    "topics": (callback) => api.circles.topics.getAll(opts.id, (error, result) => {
+                        if(error) return callback(error);
+                        callback(null, result.topics.map(topic => {
+                            let node = createDomNode("a", { class: "did-circle-item" });
+                            node.innerHTML = `<h2>${topic.title}</h2><p>${marked(topic.why)}</p>`;
+                            node.href = "#view-topic";
+                            node.addEventListener("click", e => {
+                                e.preventDefault();
+                                integration.topics.view(opts.id, topic.title);
+                                return false;
+                            });
+                            return node;
+                        }));
+                    }),
+                    "agreements": (callback) => callback(null, [])
+                };
+                Array.prototype.forEach.call(tabs, tab => {
+                    tab.addEventListener("click", e => {
+                        selectTab(tab);
+                        itemList.innerHTML = "";
+                        itemLoaders[tab.dataset.didtab]((error, items) => {
+                            items.forEach(item => itemList.appendChild(item));
+                        });
+                    });
+                });
+                Array.prototype.find.call(tabs, tab => tab.dataset.didtab == "roles").click();
+
                 overlay.hide();
             });
         }

@@ -1,5 +1,7 @@
 <div class="did-view">
-    <a href="#edit-circle" class="did-edit-link">{{#__}}Edit circle{{/__}}</a>
+    <div class="did-view-row did-view-row-double">
+        <a href="#edit-circle" class="did-edit-link">{{#__}}Edit circle{{/__}}</a>
+    </div>
     <div class="did-view-row">
         <div class="did-view-label did-view-label-title">
             {{#__}}Title{{/__}}
@@ -44,8 +46,15 @@
             <div class="did-view-value did-view-value-invited"></div>
         </div>
     </div>
-    <div class="did-view-row did-view-row-double did-circle-items-container">
+    <div class="did-view-row did-view-row-double">
         <a class="did-btn did-add-topic-link" href="#add-topic">Add topic</a>
+        <div class="did-circle-items-container">
+            <a href="#roles-tab" class="did-circle-items-container-tab" data-didtab="roles">{{#__}}Roles{{/__}}</a>
+            <a href="#tasks-tab" class="did-circle-items-container-tab" data-didtab="tasks">{{#__}}Tasks{{/__}}</a>
+            <a href="#topics-tab" class="did-circle-items-container-tab" data-didtab="topics">{{#__}}Topics{{/__}}</a>
+            <a href="#agreements-tab" class="did-circle-items-container-tab" data-didtab="agreements">{{#__}}Agreements{{/__}}</a>
+            <div class="did-circle-items-container-item-list"></div>
+        </div>
     </div>
     <div class="did-view-row did-view-row-double did-procedures-container">
         <a href="#expand-procedures" class="did-show-procedures-link">{{#__}}Show procedures{{/__}}</a>

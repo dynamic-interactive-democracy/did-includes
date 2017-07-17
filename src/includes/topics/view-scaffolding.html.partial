@@ -1,0 +1,60 @@
+<div class="did-view">
+    <div class="did-view-row did-view-row-double">
+        <a href="#back-to-circle" class="did-back-to-circle-link">{{#__}}Back to circle{{/__}}</a>
+        <a href="#edit-topic" class="did-edit-link">{{#__}}Edit topic{{/__}}</a>
+    </div>
+    <div class="did-view-row did-view-row-double">
+        <div class="did-view-label did-view-label-title">
+            Topic
+            <div class="did-view-value did-big-title did-topic-title did-view-value-title"></div>
+        </div>
+    </div>
+    <div class="did-view-row">
+        <div class="did-view-label did-view-label-owner">
+            {{#__}}Owner{{/__}}
+            <div class="did-view-value did-view-value-owner"></div>
+        </div>
+        <div class="did-view-label did-view-label-why">
+            {{#__}}Why{{/__}}
+            <div class="did-view-value did-view-value-why"></div>
+        </div>
+    </div>
+    <div class="did-view-row">
+        <div class="did-view-label did-view-label-stage">
+            {{#__}}Stage{{/__}}
+            <div class="did-topic-stage did-topic-stage-exploration">{{#__}}Exploration{{/__}}</div>
+            <div class="did-topic-stage did-topic-stage-pictureForming">{{#__}}Picture Forming{{/__}}</div>
+            <div class="did-topic-stage did-topic-stage-proposalShaping">{{#__}}Proposal Shaping{{/__}}</div>
+            <div class="did-topic-stage did-topic-stage-decisionMaking">{{#__}}Decision Making{{/__}}</div>
+            <div class="did-topic-stage did-topic-stage-agreement">{{#__}}Agreement{{/__}}</div>
+        </div>
+        <div class="did-view-label did-view-label-procedure">
+            {{#__}}Procedure{{/__}}
+            <div class="did-view-value did-view-value-procedure"></div>
+        </div>
+    </div>
+    <div class="did-view-row did-view-row-double did-comments-section">
+        <div class="did-view-label did-view-label-comments">
+            {{#__}}Comments{{/__}}
+            <div class="did-view-value did-view-value-commentsList"></div>
+            <div class="did-view-action did-view-action-addComment">
+                <!-- TODO -->
+            </div>
+        </div>
+    </div>
+    <div class="did-view-row did-view-row-double did-attachments-section">
+        <div class="did-view-label did-view-label-attachments">
+            {{#__}}Attachments{{/__}}
+            <div class="did-view-value did-view-value-attachmentList"></div>
+            <div class="did-view-action did-view-action-addAttachment">
+                <!-- TODO -->
+            </div>
+        </div>
+    </div>
+    <div class="did-view-row did-view-row-double">
+        <a href="#next-stage" class="did-btn did-go-to-next-stage-link">{{#__}}Go to next stage: {{/__}}</a>
+    </div>
+    <div class="did-overlay">
+        <div class="did-overlay-message did-overlay-message-loading">{{#__}}Loading topic...{{/__}}</div>
+    </div>
+</div>

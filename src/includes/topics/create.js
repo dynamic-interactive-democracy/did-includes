@@ -40,7 +40,7 @@ function sendCreateTopicRequest(api, integration, circleId, form) {
             overlay.failure();
             return console.error("Failed to create circle.", error);
         }
-        overlay.success(() => integration.topics.view(result.topic.topicId));
+        overlay.success(() => integration.topics.view(circleId, result.topic.title));
     });
 }
 

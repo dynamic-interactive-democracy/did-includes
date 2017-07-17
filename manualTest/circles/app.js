@@ -1,13 +1,14 @@
 const express = require("express");
-const staticView = require("../staticView");
-const path = require("path");
+const create = require("./create/endpoint");
+const view = require("./view/endpoint");
+const edit = require("./edit/endpoint");
 
 module.exports = () => {
     let app = express();
 
-    app.get("/create", staticView(path.join(__dirname, "create", "view.html")));
-    app.get("/view", staticView(path.join(__dirname, "view", "view.html")));
-    app.get("/edit", staticView(path.join(__dirname, "edit", "view.html")));
+    app.get("/create", create);
+    app.get("/view", view);
+    app.get("/edit", edit);
 
     return app;
 };

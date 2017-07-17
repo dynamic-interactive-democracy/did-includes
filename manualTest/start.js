@@ -9,7 +9,11 @@ const didIncludes = require("../index");
 
 console.log("did-includes v." + pkg.version);
 
-didIncludes.build();
+didIncludes.build(); //TODO: Would be nice to be able to specify what should build.
+// eg. { css: { minified: true }, js: { locales: [ "en_US", "en_UK" ], markdownIncluded: true }}
+//     resulting in `css min`, `js en_US`, and `js en_UK`
+// or  { js: { locales: [ "en_US" ], markdownIncluded: [ true, false ] }}
+//     resulting in `js en_US` and `js en_US no-md`
 
 let app = express();
 

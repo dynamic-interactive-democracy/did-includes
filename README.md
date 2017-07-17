@@ -1,9 +1,23 @@
 # TODO
 
-- Validation in edit and create
-- Contact person should only be allowed to be a member of the group (on edit)
-
+- Frontend validation in edit and create + display errors
 - Topics
+  - Go to next topic stage
+  - Comments
+  - Attachments
+  - Proposals + voting, etc. (proposalShaping, decisionMaking, agreement stages)
+  - Edit topic (title, why, owner)
+  - In circles: prettier list of topics (stage, owner, number of comments, number of attachments)
+
+# TODO elsewhere?
+- Contact person should only be allowed to be a member of the group (on edit)
+- Update did-api README: some TODOs outdated, circles return procedure texts.
+- Maybe the did-api circle response should be updated to return procedure texts in a nicer way:
+  - circle.procedure.topic[stage] would be nice to be able to write in here.
+  - circle.procedure.role.election and circle.procedure.role.evaluation?
+  - should it then be circle.procedure.agreement.evaluation for consistency?
+- Should we make topic return the procedure for its current stage (uneditable)?
+- In topics, maybe rename `finalProposals` to `proposals`.
 
 ## Later
 

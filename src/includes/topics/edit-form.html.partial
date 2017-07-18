@@ -1,0 +1,25 @@
+<form class="did-form did-topic-form">
+    <div class="did-form-row">
+        <label for="title">
+            {{#__}}Title{{/__}}
+            <input type="text" name="title">
+        </label>
+        <label for="owner">
+            {{#__}}Owner{{/__}}
+            <select name="owner">
+                <option>{{#__}}Loading users...{{/__}}</option>
+            </select>
+        </label>
+        <label for="why">
+            {{#__}}Why should this topic be discussed?{{/__}}
+            <textarea name="why" class="did-markdown-field"></textarea>
+        </label>
+    </div>
+    <button>{{#__}}Update topic{{/__}}</button>
+    <div class="did-overlay">
+        <div class="did-overlay-message did-overlay-message-loading">{{#__}}Loading form...{{/__}}</div>
+        <div class="did-overlay-message did-overlay-message-posting">{{#__}}Updating topic...{{/__}}</div>
+        <div class="did-overlay-message did-overlay-message-failure">{{#__}}Failed to update topic.{{/__}}</div>
+        <div class="did-overlay-message did-overlay-message-success">{{#__}}Topic updated!{{/__}}</div>
+    </div>
+</form>

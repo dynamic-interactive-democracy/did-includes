@@ -61,5 +61,12 @@
   "Roles": "Roles",
   "Tasks": "Tasks",
   "Topics": "Topics",
-  "Agreements": "Agreements"
+  "Agreements": "Agreements",
+  "Update topic": "Update topic",
+  "Updating topic...": "Updating topic...",
+  "Failed to update topic.": "Failed to update topic.",
+  "Topic updated!": "Topic updated!",
+  "Going to next stage...": "Going to next stage...",
+  "Failed to go to next stage.": "Failed to go to next stage.",
+  "Update done!": "Update done!"
 }

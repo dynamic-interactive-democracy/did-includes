@@ -53,7 +53,9 @@
             <a href="#tasks-tab" class="did-circle-items-container-tab" data-didtab="tasks">{{#__}}Tasks{{/__}}</a>
             <a href="#topics-tab" class="did-circle-items-container-tab" data-didtab="topics">{{#__}}Topics{{/__}}</a>
             <a href="#agreements-tab" class="did-circle-items-container-tab" data-didtab="agreements">{{#__}}Agreements{{/__}}</a>
-            <div class="did-circle-items-container-item-list"></div>
+            <div class="did-circle-items-container-item-list">
+                <div class="did-spinner"></div>
+            </div>
         </div>
     </div>
     <div class="did-view-row did-view-row-double did-procedures-container">

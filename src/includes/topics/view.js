@@ -2,7 +2,7 @@ const path = require("path");
 const locale = require("../../locale");
 const y18nMustacheReader = require("../../y18n-mustache-reader");
 const parallel = require("../../tiny-parallel");
-const getOverlay = require("../getViewOverlay");
+const getOverlay = require("../getFormOverlay");
 const createDomNode = require("../createDomNode");
 const renderMembers = require("../renderMembers");
 
@@ -69,7 +69,6 @@ module.exports = (api, integration, marked) => (opts) => {
                 insertDomElements("owner", renderMembers([ topic.owner ], users, integration));
 
                 let goToNextStageLink = view.querySelector(".did-go-to-next-stage-link");
-                //TODO: action!
 
                 let getStageElement = (stage) => view.querySelector(`.did-topic-stage-${stage}`);
                 let markStage = (stage, state) => {
@@ -82,6 +81,21 @@ module.exports = (api, integration, marked) => (opts) => {
                     "decisionMaking",
                     "agreement"
                 ];
+                let nextStage = null;
+
+                goToNextStageLink.addEventListener("click", e => {
+                    e.preventDefault();
+                    overlay.posting();
+                    api.circles.topics.update(opts.circleId, opts.id, { stage: nextStage }, (error) => {
+                        if(error) {
+                            overlay.failure();
+                            return console.error("Failed up go to next stage", error);
+                        }
+                        overlay.success(() => integration.topics.view(opts.circleId, opts.id));
+                    });
+                    return false;
+                });
+
                 for(let i = 0; i < stages.length; i++) {
                     let stage = stages[i];
                     if(stage != topic.stage) {
@@ -90,7 +104,8 @@ module.exports = (api, integration, marked) => (opts) => {
                     else {
                         markStage(stage, "current");
                         if(i < stages.length - 1) {
-                            goToNextStageLink.innerText += " " + getStageElement(stages[i+1]).innerText;
+                            nextStage = stages[i+1];
+                            goToNextStageLink.innerText += " " + getStageElement(nextStage).innerText;
                         }
                         else {
                             goToNextStageLink.style = "display:none;";

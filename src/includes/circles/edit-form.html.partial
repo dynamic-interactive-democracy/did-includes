@@ -4,7 +4,7 @@
             {{#__}}Title{{/__}}
             <input type="text" name="title">
         </label>
-        <label for="members">
+        <label for="contactPerson">
             {{#__}}Contact person{{/__}}
             <select name="contactPerson">
                 <option>{{#__}}Loading users...{{/__}}</option>

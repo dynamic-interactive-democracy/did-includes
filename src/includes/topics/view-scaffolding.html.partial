@@ -56,5 +56,8 @@
     </div>
     <div class="did-overlay">
         <div class="did-overlay-message did-overlay-message-loading">{{#__}}Loading topic...{{/__}}</div>
+        <div class="did-overlay-message did-overlay-message-posting">{{#__}}Going to next stage...{{/__}}</div>
+        <div class="did-overlay-message did-overlay-message-failure">{{#__}}Failed to go to next stage.{{/__}}</div>
+        <div class="did-overlay-message did-overlay-message-success">{{#__}}Update done!{{/__}}</div>
     </div>
 </div>

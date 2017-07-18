@@ -117,14 +117,24 @@ module.exports = (api, integration, marked) => (opts) => {
                     tab.classList += " selected";
                     selectedTab = tab;
                 }
-                let itemLoaders = {
+                let itemLoaders = { //TODO: Only call an item loader once (cache result if success)
                     "roles": (callback) => callback(null, []),
                     "tasks": (callback) => callback(null, []),
                     "topics": (callback) => api.circles.topics.getAll(opts.id, (error, result) => {
                         if(error) return callback(error);
                         callback(null, result.topics.map(topic => {
                             let node = createDomNode("a", { class: "did-circle-item" });
-                            node.innerHTML = `<h2>${topic.title}</h2><p>${marked(topic.why)}</p>`;
+                            node.innerHTML = `
+                                <div class="did-circle-item-description">
+                                    <h1>${topic.title}</h1>
+                                    ${marked(previewMarkdown(topic.why))}
+                                </div>
+                                <div class="did-circle-item-stats">
+                                    <div>In ${topic.stage} stage</div>
+                                    <div>${topic.comments.length} comments</div>
+                                    <div>${topic.attachments.length} attacments</div>
+                                </div>
+                            `; // TODO: Make "stage", "comments" and "attachments" localized
                             node.href = "#view-topic";
                             node.addEventListener("click", e => {
                                 e.preventDefault();
@@ -138,11 +148,14 @@ module.exports = (api, integration, marked) => (opts) => {
                 };
                 Array.prototype.forEach.call(tabs, tab => {
                     tab.addEventListener("click", e => {
+                        e.preventDefault();
                         selectTab(tab);
-                        itemList.innerHTML = "";
+                        itemList.innerHTML = `<div class="did-spinner"></div>`;
                         itemLoaders[tab.dataset.didtab]((error, items) => {
+                            itemList.innerHTML = "";
                             items.forEach(item => itemList.appendChild(item));
                         });
+                        return false;
                     });
                 });
                 Array.prototype.find.call(tabs, tab => tab.dataset.didtab == "roles").click();
@@ -152,3 +165,10 @@ module.exports = (api, integration, marked) => (opts) => {
         }
     };
 };
+
+function previewMarkdown(md) {
+    if(md.length <= 250) {
+        return md;
+    }
+    return md.substring(0, 249) + "&nbsp;&nbsp;&nbsp;&hellip;";
+}

@@ -38,7 +38,7 @@ function sendCreateTopicRequest(api, integration, circleId, form) {
     api.circles.topics.create(circleId, validation.data, (error, result) => {
         if(error) {
             overlay.failure();
-            return console.error("Failed to create circle.", error);
+            return console.error("Failed to create topic.", error);
         }
         overlay.success(() => integration.topics.view(circleId, result.topic.title));
     });

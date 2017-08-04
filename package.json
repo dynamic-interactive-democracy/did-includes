@@ -1,6 +1,6 @@
 {
   "name": "did-includes",
-  "version": "0.1.0",
+  "version": "0.1.0-alpha.1",
   "description": "",
   "main": "index.js",
   "dependencies": {
@@ -23,8 +23,12 @@
     "y18n": "^3.2.1"
   },
   "devDependencies": {
+    "@dynamic-interactive-democracy/did-api": "0.1.0-alpha.3",
     "express": "^4.15.3",
-    "openurl": "^1.1.1"
+    "openurl": "^1.1.1",
+    "pg": "^7.1.0",
+    "pg-pool": "^2.0.1",
+    "yargs": "^8.0.2"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

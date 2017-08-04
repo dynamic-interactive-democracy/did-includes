@@ -1,6 +1,6 @@
 const includeTestView = require("../../includeTestView/fun");
 
-module.exports = includeTestView((did, getQueryParam) => {
+module.exports = (apiPort) => includeTestView(apiPort, (did, getQueryParam) => {
     return {
         title: "topics/view",
         include: did.includes.topicView({

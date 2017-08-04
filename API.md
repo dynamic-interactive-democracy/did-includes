@@ -10,10 +10,21 @@ You should probably depend on the library hosted on some CDN.
 Or you can download a version and locally host it.
 
 There is a script and a css file to include in your page's `<head>`.
+
+Here are the different variances of the library found:
+
+- **locale:** The lib is built for different languages. There is a da_DK, en_UK and en_US version.
+- **markdown parser included?:** If you already have a markdown parser in your project, you can get a more lightweight version of the project.
+  The no-md versions of the script (available for each locale) require that you pass in a markdown parser after the URL and integration parameters to the library.
+
 Once that is done, you have access to the library as such:
 
 ```js
+//Markdown parser included (normal version):
 var did = require("did")(apiUrl, integration);
+
+//no-md version:
+var did = require("did")(apiUrl, integration, markdownParser);
 ```
 
 Here, `apiUrl` is a string containing the URL of the API you are integrating with.
@@ -24,9 +35,15 @@ The `integration` object expects the following values (all required for optimal 
 - `circles` is an object containing integration specifications relating to circles.
   - `view` is a function taking a single argument, `id`, which responds to requests to view a circle.
     For example, `function(id) { showCircle(id); }`.
+  - `edit` is a function taking a single argument, `id`, which responds to requests to go to the edit view for a circle.
 - `users` is an object containing integration specifications relating to users.
   - `view` is a function taking a single argument, `id`, which responds to requests to view a user.
     For example, `function(id) { showUser(id); }`.
+
+The `markdownParser` argument (only required on no-md version) is a function that takes a markdown string and produces an HTML string.
+With a library such as marked, it could be as simple as `(md) => marked(md)`.
+It is on you to make sure the parser is secure and, for example, strips out `script` tags.
+You might want to disallow custom HTML altogether.
 
 The returned value, `did` is the library.
 It contains two fields:

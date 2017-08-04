@@ -1,6 +1,6 @@
 const didIncludes = require("./index");
 
-didIncludes.build((error) => {
+didIncludes.build({ verbose: true }, (error) => {
     if(error) {
         return console.error("Failed to properly build bundles", error);
     }

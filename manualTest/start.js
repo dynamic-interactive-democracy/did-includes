@@ -1,5 +1,6 @@
 const openurl = require("openurl");
 const pkg = require("../package.json");
+const path = require("path");
 const didIncludes = require("../index");
 const didApi = require("@dynamic-interactive-democracy/did-api");
 const didIncludesManualTest = require("./app");
@@ -34,23 +35,32 @@ pgdb.query("DROP SCHEMA public CASCADE; CREATE SCHEMA public;", (error) => {
     }
     console.log("+ Cleared database " + postgresConfig.database);
 
+    //TODO: Make it possible to omit the `new` (return this in the app).
     (new didApi(console, apiConfig)).start((error) => {
         if(error) {
             return console.error("- Failed to launch API", error);
         }
-        console.log("+ Launched API on port " + yargs.apiPort);
+        console.log("+ Launched API on port " + apiConfig.port);
     });
 
-    didIncludes.build(); //TODO: Would be nice to be able to specify what should build.
-    // eg. { css: { minified: true }, js: { locales: [ "en_US", "en_UK" ], markdownIncluded: true }}
-    //     resulting in `css min`, `js en_US`, and `js en_UK`
-    // or  { js: { locales: [ "en_US" ], markdownIncluded: [ true, false ] }}
-    //     resulting in `js en_US` and `js en_US no-md`
-    // TODO: Would also be nice to bulid and watch for changes -> rebuild
+    didIncludes.build({
+        outDir: path.join(__dirname, "assets"),
+        css: { minified: false },
+        js: {
+            locale: "en_US",
+            minified: false,
+            markdownIncluded: true
+        }
+    }, (error) => {
+        if(error) {
+            return console.error("- Failed to build scripts and styles", error);
+        }
+        console.log("+ Built scripts and styles");
 
-    didIncludesManualTest({ apiPort: yargs.apiPort }).listen(manualTestPort, () => {
-        console.log("+ Launched manual test interface on port " + manualTestPort);
-        console.log("+ Opening manual test interface in default browser...");
-        openurl.open(`http://localhost:${manualTestPort}/`);
+        didIncludesManualTest({ apiPort: apiConfig.port }).listen(manualTestPort, () => {
+            console.log("+ Launched manual test interface on port " + manualTestPort);
+            console.log("+ Opening manual test interface in default browser...");
+            openurl.open(`http://localhost:${manualTestPort}/`);
+        });
     });
 });

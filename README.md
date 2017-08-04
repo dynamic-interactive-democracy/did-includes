@@ -18,6 +18,7 @@ They should also be standalone and not require very much of the integrating deve
 To see the current includes and play around with them, you should run the manual test environment.
 
 You must have a postgres server installed on your computer to do so.
+[pgAdmin](https://www.pgadmin.org/download/) is a good place to start with that.
 
 First, install all the required dependencies:
 

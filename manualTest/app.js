@@ -8,7 +8,7 @@ module.exports = (config) => {
     let app = express();
 
     app.get("/", staticView(path.join(__dirname, "index", "view.html")));
-    app.use("/assets", express.static(path.join(__dirname, "..", "output")));
+    app.use("/assets", express.static(path.join(__dirname, "assets")));
     app.use("/circles", circleTestsApp(config));
     app.use("/topics", topicsTestsApp(config));
 

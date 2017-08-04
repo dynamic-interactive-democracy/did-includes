@@ -13,6 +13,7 @@
     "html-minifier": "^3.5.2",
     "less": "^2.7.2",
     "less-plugin-clean-css": "^1.5.1",
+    "lodash": "^4.17.4",
     "marked": "^0.3.6",
     "mustache": "^2.3.0",
     "quote-stream": "^1.0.2",

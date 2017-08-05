@@ -4,6 +4,7 @@ const y18nMustacheReader = require("../../y18n-mustache-reader");
 const getOverlay = require("../getFormOverlay");
 const setUpMemberInviteSelect = require("../setUpMemberInviteSelect");
 const prefillFields = require("../prefillFields");
+const createRemovableMemberElement = require("../createRemovableMemberElement");
 
 module.exports = (api, integration) => (opts) => {
     return {
@@ -11,8 +12,14 @@ module.exports = (api, integration) => (opts) => {
             container.innerHTML = y18nMustacheReader.readSync(locale(), path.join(__dirname, "create-form.html.partial"));
             let form = container.querySelector("form.did-circle-form");
 
+
+            let prefillInvites = [];
             if(opts) {
                 if(opts.fill) {
+                    if(opts.fill.invite) {
+                        prefillInvites = opts.fill.invite;
+                        delete opts.fill.invite;
+                    }
                     prefillFields(form, opts.fill);
                 }
             }
@@ -26,8 +33,11 @@ module.exports = (api, integration) => (opts) => {
                     return console.error("Failed to load users.", error);
                 }
 
-                let options = data.users
+                let users = data.users;
+
+                let options = users
                                 .filter(user => user.userId != api.getCurrentUserId())
+                                .filter(user => prefillInvites.indexOf(user.userId) === -1)
                                 .sort((a,b) => {
                                     if(a.name == b.name) return 0;
                                     if(a.name < b.name) return -1;
@@ -36,6 +46,10 @@ module.exports = (api, integration) => (opts) => {
                                 .map(user => `<option value="${user.userId}">${user.name}</option>`)
                                 .join("");
                 membersSelect.innerHTML = `<option></option>` + options;
+
+                users.filter(user => prefillInvites.indexOf(user.userId) !== -1)
+                     .map(user => createRemovableMemberElement(user.userId, user.name, membersSelect, membersList, (id, callback) => (id, callback) => { invites = invites.filter(invitedId => invitedId != id); setTimeout(callback); }))
+                     .forEach((memberElement) => membersList.appendChild(memberElement));;
 
                 setUpMemberInviteSelect(membersSelect, membersList, {
                     invite: (id, callback) => { invites.push(id); setTimeout(callback); },

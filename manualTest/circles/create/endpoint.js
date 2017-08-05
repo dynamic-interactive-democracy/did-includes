@@ -7,7 +7,8 @@ module.exports = (config) => includeTestView(config, (did, getQueryParam) => {
             fill: {
                 title: "Imported Title",
                 aim: "We aim to import this text.",
-                fullState: "full"
+                fullState: "full",
+                invite: [ "user-id-002" ]
             }
         })
     };

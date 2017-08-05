@@ -1,8 +1,6 @@
 # TODO
 
 - Circle prefill: support prefill of invites (to make converting groups to circles easier)
-- During demo something went wrong with procedure texts. Fix!
-- Easy-to-launch manual test env + tutorial (everything config'd, clear db before run, start server, etc.)
 - Frontend validation in edit and create + display errors
 - Topics
   - Comments

@@ -36,10 +36,15 @@ function buildOutput(config, callback) {
 
     if(config.verbose) console.log("Building with config", config);
 
-    async.series([
-        (callback) => buildCssBundle(config, callback),
-        (callback) => buildJsBundle(config, callback)
-    ], (error) => {
+    let builds = [];
+    if(config.css) {
+        builds.push((callback) => buildCssBundle(config, callback));
+    }
+    if(config.js) {
+        builds.push((callback) => buildJsBundle(config, callback));
+    }
+
+    async.series(builds, (error) => {
         if(error) {
             return callback(error);
         }

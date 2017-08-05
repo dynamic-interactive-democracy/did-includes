@@ -7,6 +7,7 @@ const didIncludesManualTest = require("./app");
 const Pool = require("pg-pool");
 const async = require("async");
 const request = require("request");
+const fs = require("fs");
 
 const yargs = require("yargs").argv;
 
@@ -60,7 +61,7 @@ let apiLogger = {
 };
 
 //TODO: interrupt handler: stop things
-//TODO: Watch and rebuild on change
+//TODO: when an error occurs in the chain before browser open: stop things
 //TODO: Refactor this code!
 //TODO: Consider a --quietApi flag that results in only printing error messages from the API
 //TODO: Nicer colors printed from the api.
@@ -112,19 +113,38 @@ pgdb.query("DROP SCHEMA public CASCADE; CREATE SCHEMA public;", (error) => {
                 }
                 console.log(`+ Created ${users.length} predefined users`);
 
-                didIncludes.build({
-                    outDir: path.join(__dirname, "assets"),
-                    css: { minified: false },
-                    js: {
-                        locale: "en_US",
-                        minified: false,
-                        markdownIncluded: true
-                    }
-                }, (error) => {
+                buildAll((error) => {
                     if(error) {
                         return console.error("- Failed to build scripts and styles", error);
                     }
                     console.log("+ Built scripts and styles");
+
+                    //TODO: Some notes in API docs say that recursive watching only works in Win and macOS, not linux! :-O
+                    //TODO: For some reason rebuild is triggered several times per change on my Windows machine --- niels
+
+                    //Watch js changes and rebuild
+                    fs.watch(path.join(__dirname, "..", "src"), { recursive: true }, (eventType, filename) => {
+                        console.log("+ Triggered rebuild of javascript due to change in source files");
+                        buildJs((error) => {
+                            if(error) {
+                                return console.log("- Failed to rebuild javascript", error);
+                            }
+                            console.log("+ Rebuild of javascript completed.");
+                        });
+                    });
+
+                    //Watch css changes and rebuild
+                    fs.watch(path.join(__dirname, "..", "styles"), { recursive: true }, (eventType, filename) => {
+                        console.log("+ Triggered rebuild of css due to change in source files");
+                        buildCss((error) => {
+                            if(error) {
+                                return console.log("- Failed to rebuild css", error);
+                            }
+                            console.log("+ Rebuild of css completed.");
+                        });
+                    });
+
+                    console.log("+ Registered source file change listeners");
 
                     let manualTestConfig = {
                         apiPort: apiConfig.port,
@@ -141,3 +161,34 @@ pgdb.query("DROP SCHEMA public CASCADE; CREATE SCHEMA public;", (error) => {
         }, 100);
     });
 });
+
+function buildAll(callback) {
+    build(true, true, callback);
+}
+
+function build(css, js, callback) {
+    let opts = {
+        outDir: path.join(__dirname, "assets"),
+        css: null,
+        js: null
+    };
+    if(css) {
+        opts.css = { minified: false }
+    }
+    if(js) {
+        opts.js = {
+            locale: "en_US",
+            minified: false,
+            markdownIncluded: true
+        };
+    }
+    didIncludes.build(opts, callback);
+}
+
+function buildJs(callback) {
+    build(false, true, callback);
+}
+
+function buildCss(callback) {
+    build(true, false, callback);
+}

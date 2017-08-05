@@ -61,6 +61,9 @@ let apiLogger = {
 
 //TODO: interrupt handler: stop things
 //TODO: Watch and rebuild on change
+//TODO: Refactor this code!
+//TODO: Consider a --quietApi flag that results in only printing error messages from the API
+//TODO: Nicer colors printed from the api.
 
 console.log(`did-includes v.${pkg.version} manual test`);
 

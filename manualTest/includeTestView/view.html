@@ -8,7 +8,7 @@
     <body>
         <div class="circle-container">(If this text persists, loading failed.)</div>
         <script>
-            var did = require("did")("http://localhost:3001", {
+            var did = require("did")("http://localhost:{{ apiPort }}", {
                 users: {
                     view: (id) => alert("viewing user " + id + " not supported.")
                 },
@@ -22,7 +22,7 @@
                     edit: (circleId, id) => location.href = location.protocol + "//" + location.host + "/topics/edit?circleId=" + circleId + "&id=" + id
                 }
             });
-            did.api.asUser("sphinx", "399810c258af4960eca01949ff7a6ff7dbf2c130983f67347cb18bf979b9aa6af6354402001899ac9215e53411c8e7bbaebb62360b26678a98371d39461f3259");
+            did.api.asUser("{{ currentUser.userId }}", "{{ currentUser.token }}");
             
             var setUp = {{ & setUpFun }};
             var info = setUp(did, getParameterByName);

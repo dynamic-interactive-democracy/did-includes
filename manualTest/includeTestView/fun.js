@@ -3,9 +3,10 @@ const fs = require("fs");
 const path = require("path");
 const view = fs.readFileSync(path.join(__dirname, "view.html"), "utf8");
 
-module.exports = (apiPort, setUpFun) => {
+module.exports = (config, setUpFun) => {
     let result = mustache.render(view, {
-        apiPort,
+        apiPort: config.apiPort,
+        currentUser: config.currentUser,
         setUpFun: setUpFun.toString()
     });
 

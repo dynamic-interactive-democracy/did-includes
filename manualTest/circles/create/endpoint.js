@@ -1,6 +1,6 @@
 const includeTestView = require("../../includeTestView/fun");
 
-module.exports = (apiPort) => includeTestView(apiPort, (did, getQueryParam) => {
+module.exports = (config) => includeTestView(config, (did, getQueryParam) => {
     return {
         title: "circles/create",
         include: did.includes.circleCreate({

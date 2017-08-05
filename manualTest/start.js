@@ -61,7 +61,6 @@ let apiLogger = {
 
 //TODO: interrupt handler: stop things
 //TODO: Watch and rebuild on change
-//TODO: Create some users, use one as "current user" in tests.
 
 console.log(`did-includes v.${pkg.version} manual test`);
 

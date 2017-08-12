@@ -36,19 +36,25 @@ function buildOutput(config, callback) {
 
     if(config.verbose) console.log("Building with config", config);
 
-    let builds = [];
-    if(config.css) {
-        builds.push((callback) => buildCssBundle(config, callback));
-    }
-    if(config.js) {
-        builds.push((callback) => buildJsBundle(config, callback));
-    }
-
-    async.series(builds, (error) => {
-        if(error) {
+    fs.mkdir(config.outDir, (error) => {
+        if(error && error.code != "EEXIST") {
             return callback(error);
         }
-        callback();
+        
+        let builds = [];
+        if(config.css) {
+            builds.push((callback) => buildCssBundle(config, callback));
+        }
+        if(config.js) {
+            builds.push((callback) => buildJsBundle(config, callback));
+        }
+
+        async.series(builds, (error) => {
+            if(error) {
+                return callback(error);
+            }
+            callback();
+        });
     });
 }
 

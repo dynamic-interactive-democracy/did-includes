@@ -43,6 +43,11 @@ Here's a list of the available command line arguments and an example of use:
 - `pgUser` sets the username used to log into the postgres database (default postgres)
 - `pgPass` sets the password used to log into the postgres database (default postgres)
 - `pgDb` sets the database to use for the api server (default postgres)
+- `customApiServer` ignores the `apiPort` argument and simply doesn't run an API server.
+  Instead the provided (fully qualified!) URL will be used as the URL for the API server.
+  For example, a staging API server could be provided as `http://did-api.some-domain`.
+  Remember that using a *real*, production server will result in actual, real changes being made!
+  (So probably don't do that.)
 
 For example, to run the test interface on port 3000 (instead of 3334) and use a database call did-test (instead of postgres), run the following command:
 

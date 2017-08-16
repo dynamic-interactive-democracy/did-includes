@@ -5,7 +5,7 @@ const view = fs.readFileSync(path.join(__dirname, "view.html"), "utf8");
 
 module.exports = (config, setUpFun) => {
     let result = mustache.render(view, {
-        apiPort: config.apiPort,
+        apiUrl: config.apiUrl,
         currentUser: config.currentUser,
         setUpFun: setUpFun.toString()
     });

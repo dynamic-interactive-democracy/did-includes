@@ -8,7 +8,7 @@
     <body>
         <div class="circle-container">(If this text persists, loading failed.)</div>
         <script>
-            var did = require("did")("http://localhost:{{ apiPort }}", {
+            var did = require("did")("{{ & apiUrl }}", {
                 users: {
                     view: (id) => alert("viewing user " + id + " not supported.")
                 },

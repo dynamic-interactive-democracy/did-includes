@@ -68,105 +68,112 @@ let apiLogger = {
 
 console.log(`did-includes v.${pkg.version} manual test`);
 
-const pgdb = new Pool(postgresConfig);
-pgdb.query("DROP SCHEMA public CASCADE; CREATE SCHEMA public;", (error) => {
-    if(error) {
-        return console.error("- Failed to clear database before starting apps", error);
-    }
-    console.log("+ Cleared database " + postgresConfig.database);
-
-    //TODO: Make it possible to omit the `new` (return this in the app).
-    (new didApi(apiLogger, apiConfig)).start((error) => {
+if(!yargs.customApiServer) {
+    const pgdb = new Pool(postgresConfig);
+    pgdb.query("DROP SCHEMA public CASCADE; CREATE SCHEMA public;", (error) => {
         if(error) {
-            return console.error("- Failed to launch API", error);
+            return console.error("- Failed to clear database before starting apps", error);
         }
-        console.log("+ Launched API on port " + apiConfig.port);
+        console.log("+ Cleared database " + postgresConfig.database);
+        //TODO: Make it possible to omit the `new` (return this in the app).
+        (new didApi(apiLogger, apiConfig)).start((error) => {
+            if(error) {
+                return console.error("- Failed to launch API", error);
+            }
+            console.log("+ Launched API on port " + apiConfig.port);
 
-        setTimeout(() => {
             //TODO: Without this silly timeout, the requests sometimes fail on the serverside (parserelation.c something)
             // very odd. Does start maybe callback before it is actually ready?
-            async.map([
-                { userId: "user-id-001", name: "Current User" },
-                { userId: "user-id-002", name: "Asbjørn Thegler" },
-                { userId: "user-id-003", name: "Rolf Bjerre" },
-                { userId: "user-id-004", name: "Niels Abildgaard" },
-                { userId: "user-id-005", name: "Kristiane Ravn Frost" }
-            ], (data, callback) => {
-                request.post(`http://localhost:${apiConfig.port}/users`, {
-                    json: data
-                }, (error, httpResponse, body) => {
+            setTimeout(() => setUpTestEnv(`http://localhost:${apiConfig.port}`), 100);
+        });
+    });
+}
+else {
+    console.log("+ Using custom API server " + yargs.customApiServer);
+    setUpTestEnv(yargs.customApiServer);
+}
+
+function setUpTestEnv(apiUrl) {
+    async.map([
+        { userId: "user-id-001", name: "Current User" },
+        { userId: "user-id-002", name: "Asbjørn Thegler" },
+        { userId: "user-id-003", name: "Rolf Bjerre" },
+        { userId: "user-id-004", name: "Niels Abildgaard" },
+        { userId: "user-id-005", name: "Kristiane Ravn Frost" }
+    ], (data, callback) => {
+        request.post(`${apiUrl}/users`, {
+            json: data
+        }, (error, httpResponse, body) => {
+            if(error) {
+                return callback(error);
+            }
+            if(httpResponse.statusCode < 200 || httpResponse.statusCode >= 300) {
+                return callback({
+                    trace: new Error("Failed to create user"),
+                    statusCode: httpResponse.statusCode,
+                    response: body
+                });
+            }
+            callback(null, body.user);
+        })
+    }, (error, users) => {
+        if(error) {
+            return console.error("- Failed to create users", error);
+        }
+        console.log(`+ Created ${users.length} predefined users`);
+
+        buildAll((error) => {
+            if(error) {
+                return console.error("- Failed to build scripts and styles", error);
+            }
+            console.log("+ Built scripts and styles");
+
+            //TODO: Some notes in API docs say that recursive watching only works in Win and macOS, not linux! :-O
+            //TODO: For some reason rebuild is triggered several times per change on my Windows machine --- niels
+
+            //Watch js changes and rebuild
+            fs.watch(path.join(__dirname, "..", "src"), { recursive: true }, (eventType, filename) => {
+                console.log("+ Triggered rebuild of javascript due to change in source files");
+                buildJs((error) => {
                     if(error) {
-                        return callback(error);
+                        return console.log("- Failed to rebuild javascript", error);
                     }
-                    if(httpResponse.statusCode < 200 && httpResponse.statusCode >= 300) {
-                        return callback({
-                            trace: new Error("Failed to create user"),
-                            statusCode: httpResponse.statusCode,
-                            response: body
-                        });
-                    }
-                    callback(null, body.user);
-                })
-            }, (error, users) => {
-                if(error) {
-                    return console.error("- Failed to create users", error);
-                }
-                console.log(`+ Created ${users.length} predefined users`);
-
-                buildAll((error) => {
-                    if(error) {
-                        return console.error("- Failed to build scripts and styles", error);
-                    }
-                    console.log("+ Built scripts and styles");
-
-                    //TODO: Some notes in API docs say that recursive watching only works in Win and macOS, not linux! :-O
-                    //TODO: For some reason rebuild is triggered several times per change on my Windows machine --- niels
-
-                    //Watch js changes and rebuild
-                    fs.watch(path.join(__dirname, "..", "src"), { recursive: true }, (eventType, filename) => {
-                        console.log("+ Triggered rebuild of javascript due to change in source files");
-                        buildJs((error) => {
-                            if(error) {
-                                return console.log("- Failed to rebuild javascript", error);
-                            }
-                            console.log("+ Rebuild of javascript completed.");
-                        });
-                    });
-
-                    //Watch css changes and rebuild
-                    fs.watch(path.join(__dirname, "..", "styles"), { recursive: true }, (eventType, filename) => {
-                        console.log("+ Triggered rebuild of css due to change in source files");
-                        buildCss((error) => {
-                            if(error) {
-                                return console.log("- Failed to rebuild css", error);
-                            }
-                            console.log("+ Rebuild of css completed.");
-                        });
-                    });
-
-                    console.log("+ Registered source file change listeners");
-
-                    let manualTestConfig = {
-                        apiPort: apiConfig.port,
-                        currentUser: users[0]
-                    };
-
-                    didIncludesManualTest(manualTestConfig).listen(manualTestPort, () => {
-                        console.log("+ Launched manual test interface on port " + manualTestPort);
-                        console.log("+ Opening manual test interface in default browser...");
-                        let manualTestInterfaceUrl = `http://localhost:${manualTestPort}/`;
-                        try {
-                            openurl.open(manualTestInterfaceUrl);
-                        } catch(e) {
-                            console.log("- Failed to automatically open test interface in your browser.");
-                            console.log(`  Please open ${manualTestInterfaceUrl} manually.`);
-                        }
-                    });
+                    console.log("+ Rebuild of javascript completed.");
                 });
             });
-        }, 100);
+
+            //Watch css changes and rebuild
+            fs.watch(path.join(__dirname, "..", "styles"), { recursive: true }, (eventType, filename) => {
+                console.log("+ Triggered rebuild of css due to change in source files");
+                buildCss((error) => {
+                    if(error) {
+                        return console.log("- Failed to rebuild css", error);
+                    }
+                    console.log("+ Rebuild of css completed.");
+                });
+            });
+
+            console.log("+ Registered source file change listeners");
+
+            let manualTestConfig = {
+                apiUrl,
+                currentUser: users[0]
+            };
+
+            didIncludesManualTest(manualTestConfig).listen(manualTestPort, () => {
+                console.log("+ Launched manual test interface on port " + manualTestPort);
+                console.log("+ Opening manual test interface in default browser...");
+                let manualTestInterfaceUrl = `http://localhost:${manualTestPort}/`;
+                try {
+                    openurl.open(manualTestInterfaceUrl);
+                } catch(e) {
+                    console.log("- Failed to automatically open test interface in your browser.");
+                    console.log(`  Please open ${manualTestInterfaceUrl} manually.`);
+                }
+            });
+        });
     });
-});
+}
 
 function buildAll(callback) {
     build(true, true, callback);

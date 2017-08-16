@@ -24,7 +24,7 @@ module.exports = (api, integration) => (opts) => {
                 }
             }
 
-            let invites = [];
+            let invites = prefillInvites;
             let membersSelect = form.querySelector("[name=inviteMembers]");
             let membersList = form.querySelector(".did-invited-members-list");
 

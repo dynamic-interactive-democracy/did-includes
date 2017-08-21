@@ -47,6 +47,7 @@
         </div>
     </div>
     <div class="did-view-row did-view-row-double">
+        <a class="did-btn did-add-task-link" href="#add-task">Add task</a>
         <a class="did-btn did-add-topic-link" href="#add-topic">Add topic</a>
         <div class="did-circle-items-container">
             <a href="#roles-tab" class="did-circle-items-container-tab" data-didtab="roles">{{#__}}Roles{{/__}}</a>

@@ -20,6 +20,11 @@
                     create: (circleId) => location.href = location.protocol + "//" + location.host + "/topics/create?circleId=" + circleId,
                     view: (circleId, id) => location.href = location.protocol + "//" + location.host + "/topics/view?circleId=" + circleId + "&id=" + id,
                     edit: (circleId, id) => location.href = location.protocol + "//" + location.host + "/topics/edit?circleId=" + circleId + "&id=" + id
+                },
+                tasks: {
+                    create: (circleId) => location.href = location.protocol + "//" + location.host + "/tasks/create?circleId=" + circleId,
+                    view: (circleId, id) => location.href = location.protocol + "//" + location.host + "/tasks/view?circleId=" + circleId + "&id=" + id,
+                    edit: (circleId, id) => location.href = location.protocol + "//" + location.host + "/tasks/edit?circleId=" + circleId + "&id=" + id
                 }
             });
             did.api.asUser("{{ currentUser.userId }}", "{{ currentUser.token }}");

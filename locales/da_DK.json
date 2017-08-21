@@ -68,5 +68,21 @@
   "Topic updated!": "Topic updated!",
   "Going to next stage...": "Going to next stage...",
   "Failed to go to next stage.": "Failed to go to next stage.",
-  "Update done!": "Update done!"
+  "Update done!": "Update done!",
+  "Loading task...": "Loading task...",
+  "Due date": "Due date",
+  "Description": "Description",
+  "Create task": "Create task",
+  "Creating task...": "Creating task...",
+  "Failed to create task.": "Failed to create task.",
+  "Task created!": "Task created!",
+  "Edit task": "Edit task",
+  "Status": "Status",
+  "Behind schedule": "Behind schedule",
+  "On schedule": "On schedule",
+  "Ahead of schedule": "Ahead of schedule",
+  "Update task": "Update task",
+  "Updating task...": "Updating task...",
+  "Failed to update task.": "Failed to update task.",
+  "Task updated!": "Task updated!"
 }

@@ -31,6 +31,12 @@ module.exports = (url) => {
                 update: (circleId, id, data, callback) => r("PUT", `/circles/${circleId}/topics/${id}`, data, callback),
                 get: (circleId, id, callback) => r("GET", `/circles/${circleId}/topics/${id}`, callback),
                 getAll: (circleId, callback) => r("GET", `/circles/${circleId}/topics`, callback)
+            },
+            tasks: {
+                create: (circleId, data, callback) => r("POST", `/circles/${circleId}/tasks`, data, callback),
+                update: (circleId, id, data, callback) => r("PUT", `/circles/${circleId}/tasks/${id}`, data, callback),
+                get: (circleId, id, callback) => r("GET", `/circles/${circleId}/tasks/${id}`, callback),
+                getAll: (circleId, callback) => r("GET", `/circles/${circleId}/tasks`, callback)
             }
         }
     };

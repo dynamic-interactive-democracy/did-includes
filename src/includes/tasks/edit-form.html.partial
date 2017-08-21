@@ -1,0 +1,43 @@
+<form class="did-form did-topic-form">
+    <div class="did-form-row">
+        <label for="title">
+            {{#__}}Title{{/__}}
+            <input type="text" name="title">
+        </label>
+        <label for="owner">
+            {{#__}}Owner{{/__}}
+            <select name="owner">
+                <option>{{#__}}Loading users...{{/__}}</option>
+            </select>
+        </label>
+        <label for="dueDate">
+            {{#__}}Due date{{/__}}
+            <input name="dueDate" type="date" format="YYYY-MM-DD" placeholder="YYYY-MM-DD">
+        </label>
+        <label for="status">
+            {{#__}}Status{{/__}}
+            <select name="status">
+                <option value="behindSchedule">{{#__}}Behind schedule{{/__}}</option>
+                <option value="onSchedule">{{#__}}On schedule{{/__}}</option>
+                <option value="aheadOfSchedule">{{#__}}Ahead of schedule{{/__}}</option>
+            </select>
+        </label>
+    </div>
+    <div class="did-form-row">
+        <label for="aim">
+            {{#__}}Aim{{/__}}
+            <textarea name="aim" class="did-markdown-field"></textarea>
+        </label>
+        <label for="description">
+            {{#__}}Description{{/__}}
+            <textarea name="description" class="did-markdown-field"></textarea>
+        </label>
+    </div>
+    <button>{{#__}}Update task{{/__}}</button>
+    <div class="did-overlay">
+        <div class="did-overlay-message did-overlay-message-loading">{{#__}}Loading form...{{/__}}</div>
+        <div class="did-overlay-message did-overlay-message-posting">{{#__}}Updating task...{{/__}}</div>
+        <div class="did-overlay-message did-overlay-message-failure">{{#__}}Failed to update task.{{/__}}</div>
+        <div class="did-overlay-message did-overlay-message-success">{{#__}}Task updated!{{/__}}</div>
+    </div>
+</form>

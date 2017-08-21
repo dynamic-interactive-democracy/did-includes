@@ -1,0 +1,27 @@
+<form class="did-form did-task-form">
+    <div class="did-form-row">
+        <label for="title">
+            {{#__}}Title{{/__}}
+            <input type="text" name="title">
+        </label>
+        <label for="dueDate">
+            {{#__}}Due date{{/__}}
+            <input name="dueDate" type="date" format="YYYY-MM-DD" placeholder="YYYY-MM-DD" class="did-value">
+        </label>
+        <label for="aim">
+            {{#__}}Aim{{/__}}
+            <textarea name="aim" class="did-markdown-field"></textarea>
+        </label>
+        <label for="description">
+            {{#__}}Description{{/__}}
+            <textarea name="description" class="did-markdown-field"></textarea>
+        </label>
+    </div>
+    <button>{{#__}}Create task{{/__}}</button>
+    <div class="did-overlay">
+        <div class="did-overlay-message did-overlay-message-loading">{{#__}}Loading form...{{/__}}</div>
+        <div class="did-overlay-message did-overlay-message-posting">{{#__}}Creating task...{{/__}}</div>
+        <div class="did-overlay-message did-overlay-message-failure">{{#__}}Failed to create task.{{/__}}</div>
+        <div class="did-overlay-message did-overlay-message-success">{{#__}}Task created!{{/__}}</div>
+    </div>
+</form>

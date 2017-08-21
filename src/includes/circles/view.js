@@ -101,12 +101,15 @@ module.exports = (api, integration, marked) => (opts) => {
                     return false;
                 });
 
-                let addTopicLink = view.querySelector(".did-add-topic-link");
-                addTopicLink.addEventListener("click", e => {
-                    e.preventDefault();
-                    integration.topics.create(opts.id);
-                    return false;
-                });
+                let setUpButton = (selector, action) => {
+                    view.querySelector(selector).addEventListener("click", e => {
+                        e.preventDefault();
+                        action();
+                        return false;
+                    });
+                };
+                setUpButton(".did-add-task-link", () => integration.tasks.create(opts.id));
+                setUpButton(".did-add-topic-link", () => integration.topics.create(opts.id));
 
                 //Set up item tabs
                 let itemList = view.querySelector(".did-circle-items-container-item-list");
@@ -119,9 +122,35 @@ module.exports = (api, integration, marked) => (opts) => {
                 }
                 let itemLoaders = { //TODO: Only call an item loader once (cache result if success)
                     "roles": (callback) => callback(null, []),
-                    "tasks": (callback) => callback(null, []),
+                    "tasks": (callback) => api.circles.tasks.getAll(opts.id, (error, result) => {
+                        if(error) {
+                            return callback(error);
+                        }
+                        callback(null, result.tasks.map(task => {
+                            let node = createDomNode("a", { class: "did-circle-item" });
+                            node.innerHTML = `
+                                <div class="did-circle-item-description">
+                                    <h1>${task.title}</h1>
+                                    ${marked(previewMarkdown(task.aim))}
+                                </div>
+                                <div class="did-circle-item-stats">
+                                    <div>${task.status}</div>
+                                    <div>${task.attachments.length} attacments</div>
+                                </div>
+                            `; // TODO: Make "stage", "comments" and "attachments" localized
+                            node.href = "#view-task";
+                            node.addEventListener("click", e => {
+                                e.preventDefault();
+                                integration.tasks.view(opts.id, task.taskId);
+                                return false;
+                            });
+                            return node;
+                        }));
+                    }),
                     "topics": (callback) => api.circles.topics.getAll(opts.id, (error, result) => {
-                        if(error) return callback(error);
+                        if(error) {
+                            return callback(error);
+                        }
                         callback(null, result.topics.map(topic => {
                             let node = createDomNode("a", { class: "did-circle-item" });
                             node.innerHTML = `
@@ -138,7 +167,7 @@ module.exports = (api, integration, marked) => (opts) => {
                             node.href = "#view-topic";
                             node.addEventListener("click", e => {
                                 e.preventDefault();
-                                integration.topics.view(opts.id, topic.title);
+                                integration.topics.view(opts.id, topic.topicId);
                                 return false;
                             });
                             return node;

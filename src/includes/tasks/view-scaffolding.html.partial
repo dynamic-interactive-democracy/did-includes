@@ -1,0 +1,45 @@
+<div class="did-view">
+    <div class="did-view-row did-view-row-double">
+        <a href="#back-to-circle" class="did-back-to-circle-link">{{#__}}Back to circle{{/__}}</a>
+        <a href="#edit-task" class="did-edit-link">{{#__}}Edit task{{/__}}</a>
+    </div>
+    <div class="did-view-row did-view-row-double">
+        <div class="did-view-label did-view-label-title">
+            Task
+            <div class="did-view-value did-big-title did-topic-title did-view-value-title"></div>
+        </div>
+    </div>
+    <div class="did-view-row">
+        <div class="did-view-label did-view-label-dueDate">
+            {{#__}}Due date{{/__}}
+            <div class="did-view-value did-view-value-dueDate"></div>
+        </div>
+        <div class="did-view-label did-view-label-owner">
+            {{#__}}Owner{{/__}}
+            <div class="did-view-value did-view-value-owner"></div>
+        </div>
+        <div class="did-view-label did-view-label-aim">
+            {{#__}}Aim{{/__}}
+            <div class="did-view-value did-view-value-aim"></div>
+        </div>
+        <div class="did-view-label did-view-label-description">
+            {{#__}}Description{{/__}}
+            <div class="did-view-value did-view-value-description"></div>
+        </div>
+    </div>
+    <div class="did-view-row">
+        <div class="did-view-label did-view-label-status">
+            {{#__}}Status{{/__}}
+            <div class="did-topic-status did-topic-status-behindSchedule">{{#__}}Behind schedule{{/__}}</div>
+            <div class="did-topic-status did-topic-status-onSchedule">{{#__}}On schedule{{/__}}</div>
+            <div class="did-topic-status did-topic-status-aheadOfSchedule">{{#__}}Ahead of schedule{{/__}}</div>
+        </div>
+        <div class="did-view-label did-view-label-procedure">
+            {{#__}}Procedure{{/__}}
+            <div class="did-view-value did-view-value-procedure"></div>
+        </div>
+    </div>
+    <div class="did-overlay">
+        <div class="did-overlay-message did-overlay-message-loading">{{#__}}Loading task...{{/__}}</div>
+    </div>
+</div>

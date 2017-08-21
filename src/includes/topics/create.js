@@ -2,30 +2,14 @@ const path = require("path");
 const locale = require("../../locale");
 const y18nMustacheReader = require("../../y18n-mustache-reader");
 const getOverlay = require("../getFormOverlay");
-const setUpMemberInviteSelect = require("../setUpMemberInviteSelect");
-const prefillFields = require("../prefillFields");
+const formInclude = require("../formInclude");
 
-module.exports = (api, integration) => (opts) => {
-    return {
-        renderIn: (container) => {
-            container.innerHTML = y18nMustacheReader.readSync(locale(), path.join(__dirname, "create-form.html.partial"));
-            let form = container.querySelector("form.did-topic-form");
-
-            if(!opts || !opts.circleId) {
-                throw new Error("Missing circleId in topics creation form, must be supplied in opts");
-            }
-            if(opts.fill) {
-                prefillFields(form, opts.fill);
-            }
-
-            form.addEventListener("submit", (e) => {
-                e.preventDefault();
-                sendCreateTopicRequest(api, integration, opts.circleId, form);
-                return false;
-            });
-        }
-    };
-};
+module.exports = formInclude({
+    html: y18nMustacheReader.readSync(locale(), path.join(__dirname, "create-form.html.partial")),
+    requiredOptions: [ "circleId" ],
+    prefillFrom: "fill",
+    formSubmitHandler: (api, integration, opts, form) => sendCreateTopicRequest(api, integration, opts.circleId, form)
+});
 
 function sendCreateTopicRequest(api, integration, circleId, form) {
     let validation = validateData(form);
@@ -40,7 +24,7 @@ function sendCreateTopicRequest(api, integration, circleId, form) {
             overlay.failure();
             return console.error("Failed to create topic.", error);
         }
-        overlay.success(() => integration.topics.view(circleId, result.topic.title));
+        overlay.success(() => integration.topics.view(circleId, result.topic.topicId));
     });
 }
 

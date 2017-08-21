@@ -11,7 +11,7 @@ module.exports = formInclude({
     html: y18nMustacheReader.readSync(locale(), path.join(__dirname, "edit-form.html.partial")),
     requiredOptions: [ "id", "circleId" ],
     formSubmitHandler: (api, integration, opts, form) => sendUpdateTaskRequest(api, integration, opts.circleId, opts.id, form)
-}, (api, integration, opts, form, callback) => {    
+}, (api, integration, opts, form, callback) => {
     parallel({
         usersRequest: (callback) => api.users.get(callback),
         circleRequest: (callback) => api.circles.get(opts.circleId, callback),

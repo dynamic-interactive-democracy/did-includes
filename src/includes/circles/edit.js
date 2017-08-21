@@ -5,99 +5,84 @@ const getOverlay = require("../getFormOverlay");
 const parallel = require("../../tiny-parallel");
 const createRemovableMemberElement = require("../createRemovableMemberElement");
 const setUpMemberInviteSelect = require("../setUpMemberInviteSelect");
+const formInclude = require("../formInclude");
 
-module.exports = (api, integration) => (opts) => {
-    return {
-        renderIn: (container) => {
-            container.innerHTML = y18nMustacheReader.readSync(locale(), path.join(__dirname, "edit-form.html.partial"));
-            let form = container.querySelector("form.did-circle-form");
+module.exports = formInclude({
+    html: y18nMustacheReader.readSync(locale(), path.join(__dirname, "edit-form.html.partial")),
+    requiredOptions: [ "id" ],
+    formSubmitHandler: (api, integration, opts, form) => sendUpdateCircleRequest(api, integration, opts.id, form)
+}, (api, integration, opts, form, callback) => {
+    let inviteMembersSelect = form.querySelector("[name=inviteMembers]");
+    let inviteMembersList = form.querySelector(".did-invited-members-list");
+    let membersList = form.querySelector(".did-members-list");
 
-            let overlay = getOverlay(form);
-            overlay.loading();
-
-            if(!opts || !opts.id) {
-                throw new Error("Missing circle ID for circleEdit include. You should provide `id` as an option when creating the include.");
-            }
-
-            let inviteMembersSelect = form.querySelector("[name=inviteMembers]");
-            let inviteMembersList = form.querySelector(".did-invited-members-list");
-            let membersList = form.querySelector(".did-members-list");
-
-            parallel({
-                usersRequest: (callback) => api.users.get(callback),
-                circleRequest: (callback) => api.circles.get(opts.id, callback)
-            }, (error, result) => {
-                if(error) {
-                    return console.error("Failed to load data", error);
-                }
-                let users = result.usersRequest.users;
-                let circle = result.circleRequest.circle;
-
-                if(circle.members.indexOf(api.getCurrentUserId()) === -1) {
-                    return console.error("Cannot edit this form. Not a member.");
-                }
-
-                let setValue = (name, value) => form[name].value = value;
-                let transferValueByName = (name) => setValue(name, circle[name]);
-                let transferValuesByName = (names) => names.forEach(transferValueByName);
-                setValue("title", circle.name);
-                transferValuesByName([
-                    "vision",
-                    "mission",
-                    "aim",
-                    "fullState",
-                    "expectationsForMembers",
-                    //Procedures:
-                    "roleElectionProcedure",
-                    "roleEvaluationProcedure",
-                    "taskMeetingProcedure",
-                    "topicExplorationStageProcedure",
-                    "topicPictureFormingStageProcedure",
-                    "topicProposalShapingStageProcedure",
-                    "topicDecisionMakingStageProcedure",
-                    "topicAgreementStageProcedure",
-                    "agreementEvaluationProcedure"
-                ]);
-
-                let otherUsers = users
-                                .filter(user => user.userId != api.getCurrentUserId())
-                                .sort((a,b) => {
-                                    if(a.name == b.name) return 0;
-                                    if(a.name < b.name) return -1;
-                                    return 1;
-                                });
-
-                let invitableUsers = otherUsers.filter(user => circle.invited.indexOf(user.userId) === -1 && circle.members.indexOf(user.userId) === -1);
-                let invitedUsers = otherUsers.filter(user => circle.invited.indexOf(user.userId) !== -1);
-                let memberUsers = users.filter(user => circle.members.indexOf(user.userId) !== -1);
-
-                let inviteOptions = invitableUsers.map(user => `<option value="${user.userId}">${user.name}</option>`).join("");
-                inviteMembersSelect.innerHTML = `<option></option>` + inviteOptions;
-                
-                let contactPersonOptions = users.map(user => `<option value="${user.userId}">${user.name}</option>`).join("");
-                let contactPersonSelect = form.contactPerson;
-                contactPersonSelect.innerHTML = contactPersonOptions;
-                contactPersonSelect.value = circle.contactPerson;
-
-                addRemovableMemberElementsToList(api, opts.id, memberUsers, inviteMembersSelect, membersList);
-                addRemovableMemberElementsToList(api, opts.id, invitedUsers, inviteMembersSelect, inviteMembersList);
-
-                setUpMemberInviteSelect(inviteMembersSelect, inviteMembersList, {
-                    invite: (userId, callback) => api.circles.members.invite(opts.id, userId, callback),
-                    remove: (userId, callback) => api.circles.members.remove(opts.id, userId, callback)
-                });
-
-                overlay.hide();
-            });
-
-            form.addEventListener("submit", (e) => {
-                e.preventDefault();
-                sendUpdateCircleRequest(api, integration, opts.id, form);
-                return false;
-            });
+    parallel({
+        usersRequest: (callback) => api.users.get(callback),
+        circleRequest: (callback) => api.circles.get(opts.id, callback)
+    }, (error, result) => {
+        if(error) {
+            return console.error("Failed to load data", error);
         }
-    };
-};
+        let users = result.usersRequest.users;
+        let circle = result.circleRequest.circle;
+
+        if(circle.members.indexOf(api.getCurrentUserId()) === -1) {
+            return console.error("Cannot edit this form. Not a member.");
+        }
+
+        let setValue = (name, value) => form[name].value = value;
+        let transferValueByName = (name) => setValue(name, circle[name]);
+        let transferValuesByName = (names) => names.forEach(transferValueByName);
+        setValue("title", circle.name);
+        transferValuesByName([
+            "vision",
+            "mission",
+            "aim",
+            "fullState",
+            "expectationsForMembers",
+            //Procedures:
+            "roleElectionProcedure",
+            "roleEvaluationProcedure",
+            "taskMeetingProcedure",
+            "topicExplorationStageProcedure",
+            "topicPictureFormingStageProcedure",
+            "topicProposalShapingStageProcedure",
+            "topicDecisionMakingStageProcedure",
+            "topicAgreementStageProcedure",
+            "agreementEvaluationProcedure"
+        ]);
+
+        let otherUsers = users
+                        .filter(user => user.userId != api.getCurrentUserId())
+                        .sort((a,b) => {
+                            if(a.name == b.name) return 0;
+                            if(a.name < b.name) return -1;
+                            return 1;
+                        });
+
+        let invitableUsers = otherUsers.filter(user => circle.invited.indexOf(user.userId) === -1 && circle.members.indexOf(user.userId) === -1);
+        let invitedUsers = otherUsers.filter(user => circle.invited.indexOf(user.userId) !== -1);
+        let memberUsers = users.filter(user => circle.members.indexOf(user.userId) !== -1);
+
+        let inviteOptions = invitableUsers.map(user => `<option value="${user.userId}">${user.name}</option>`).join("");
+        inviteMembersSelect.innerHTML = `<option></option>` + inviteOptions;
+        
+        let contactPersonOptions = users.map(user => `<option value="${user.userId}">${user.name}</option>`).join("");
+        let contactPersonSelect = form.contactPerson;
+        contactPersonSelect.innerHTML = contactPersonOptions;
+        contactPersonSelect.value = circle.contactPerson;
+
+        addRemovableMemberElementsToList(api, opts.id, memberUsers, inviteMembersSelect, membersList);
+        addRemovableMemberElementsToList(api, opts.id, invitedUsers, inviteMembersSelect, inviteMembersList);
+
+        setUpMemberInviteSelect(inviteMembersSelect, inviteMembersList, {
+            invite: (userId, callback) => api.circles.members.invite(opts.id, userId, callback),
+            remove: (userId, callback) => api.circles.members.remove(opts.id, userId, callback)
+        });
+
+        callback();
+    });
+});
 
 function addRemovableMemberElementsToList(api, circleId, users, membersSelect, membersList) {
     users.map(user => createRemovableMemberElement(user.userId, user.name, membersSelect, membersList, (userId, callback) => api.circles.members.remove(circleId, userId, callback)))

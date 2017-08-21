@@ -12,7 +12,6 @@ module.exports = (api, integration) => (opts) => {
             container.innerHTML = y18nMustacheReader.readSync(locale(), path.join(__dirname, "create-form.html.partial"));
             let form = container.querySelector("form.did-circle-form");
 
-
             let prefillInvites = [];
             if(opts) {
                 if(opts.fill) {

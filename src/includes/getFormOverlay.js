@@ -5,11 +5,10 @@ module.exports = (form) => {
     let failureMsg = overlay.querySelector(".did-overlay-message-failure");
     let successMsg = overlay.querySelector(".did-overlay-message-success");
 
+    let msgs = [ loadingMsg, postingMsg, failureMsg, successMsg ];
+
     let hideAllMsgs = () => {
-        loadingMsg.style = "";
-        failureMsg.style = "";
-        successMsg.style = "";
-        postingMsg.style = "";
+        msgs.forEach(msg => msg.style = "");
     };
 
     let hide = () => {
@@ -22,6 +21,14 @@ module.exports = (form) => {
         hideAllMsgs();
         overlay.style = "display:flex;opacity:1;";
         msg.style = "opacity:1;";
+    }
+
+    if(!postingMsg || !failureMsg || !successMsg) {
+        msgs = [ loadingMsg ];
+        return {
+            loading: () => showMsg(loadingMsg),
+            hide: hide
+        };
     }
 
     return {

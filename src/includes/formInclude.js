@@ -1,48 +1,24 @@
-const getOverlay = require("./getFormOverlay");
+const include = require("./include");
 const prefillFields = require("./prefillFields");
 
-module.exports = (formIncludeOptions, setUp) => {
-    return (api, integration) => (opts) => {
-        return {
-            renderIn: (container) => {
-                container.innerHTML = formIncludeOptions.html;
-                let form = container.querySelector("form");
+module.exports = (formIncludeOptions, setUp) => include({
+    html: formIncludeOptions.html,
+    requiredOptions: formIncludeOptions.requiredOptions,
+    view: "form"
+}, (api, integration, marked, opts, form, callback) => {
+    if(formIncludeOptions.prefillFrom && opts && opts[formIncludeOptions.prefillFrom]) {
+        prefillFields(form, opts[formIncludeOptions.prefillFrom]);
+    }
 
-                let overlay = getOverlay(form);
-                overlay.loading();
+    form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        formIncludeOptions.formSubmitHandler(api, integration, opts, form);
+        return false;
+    });
 
-                if(formIncludeOptions.requiredOptions) {
-                    if(!opts) {
-                        throw new Error("Missing options argument in form include");
-                    }
-                    let missingOptions = formIncludeOptions.requiredOptions
-                                            .filter(requiredOption => typeof opts[requiredOption] === "undefined");
-                    if(missingOptions.length) {
-                        throw new Error(`Missing options '${missingOptions.join("', '")}' in form include`);
-                    }
-                }
+    if(!setUp) {
+        setUp = function(api, integration, opts, form, callback) { callback(); };
+    }
 
-                if(formIncludeOptions.prefillFrom && opts[formIncludeOptions.prefillFrom]) {
-                    prefillFields(form, opts[formIncludeOptions.prefillFrom]);
-                }
-
-                form.addEventListener("submit", (e) => {
-                    e.preventDefault();
-                    formIncludeOptions.formSubmitHandler(api, integration, opts, form);
-                    return false;
-                });
-
-                if(!setUp) {
-                    setUp = function(api, integration, opts, form, callback) { callback(); };
-                }
-
-                setUp(api, integration, opts, form, (error) => {
-                    if(error) {
-                        return console.error("Failed to load form", error);
-                    }
-                    overlay.hide();
-                });
-            }
-        };
-    };
-};
+    setUp(api, integration, opts, form, callback);
+});

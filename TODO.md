@@ -1,5 +1,6 @@
 # TODO
 
+- User overview (my circles, tasks, topics, etc)
 - Frontend validation in edit and create + display errors
 - Topics
   - Comments
@@ -11,7 +12,6 @@
   - Edit topic (title, why, owner) (Only missing test with backend that supports title changes)
   - In some late stage: go back to exploration
 - Partials: comments, attachments, overlays
-- Tasks
 
 # TODO elsewhere?
 - Contact person should only be allowed to be a member of the group (on edit)

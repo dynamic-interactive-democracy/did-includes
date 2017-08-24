@@ -72,13 +72,15 @@ if(!yargs.customApiServer) {
     const pgdb = new Pool(postgresConfig);
     pgdb.query("DROP SCHEMA public CASCADE; CREATE SCHEMA public;", (error) => {
         if(error) {
-            return console.error("- Failed to clear database before starting apps", error);
+            console.error("- Failed to clear database before starting apps", error);
+            return process.exit(1);
         }
         console.log("+ Cleared database " + postgresConfig.database);
         //TODO: Make it possible to omit the `new` (return this in the app).
         (new didApi(apiLogger, apiConfig)).start((error) => {
             if(error) {
-                return console.error("- Failed to launch API", error);
+                console.error("- Failed to launch API", error);
+                return process.exit(2);
             }
             console.log("+ Launched API on port " + apiConfig.port);
 
@@ -118,13 +120,15 @@ function setUpTestEnv(apiUrl) {
         })
     }, (error, users) => {
         if(error) {
-            return console.error("- Failed to create users", error);
+            console.error("- Failed to create users", error);
+            return process.exit(3);
         }
         console.log(`+ Created ${users.length} predefined users`);
 
         buildAll((error) => {
             if(error) {
-                return console.error("- Failed to build scripts and styles", error);
+                console.error("- Failed to build scripts and styles", error);
+                return process.exit(4);
             }
             console.log("+ Built scripts and styles");
 

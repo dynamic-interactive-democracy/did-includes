@@ -164,12 +164,13 @@ function setUpTestEnv(apiUrl) {
                 console.log("+ Launched manual test interface on port " + manualTestPort);
                 console.log("+ Opening manual test interface in default browser...");
                 let manualTestInterfaceUrl = `http://localhost:${manualTestPort}/`;
-                try {
-                    openurl.open(manualTestInterfaceUrl);
-                } catch(e) {
-                    console.log("- Failed to automatically open test interface in your browser.");
-                    console.log(`  Please open ${manualTestInterfaceUrl} manually.`);
-                }
+
+                openurl.open(manualTestInterfaceUrl, (error) => {
+                    if(error) {
+                        console.log("- Failed to automatically open test interface in your browser.");
+                        console.log(`  Please open ${manualTestInterfaceUrl} manually.`);
+                    }
+                });
             });
         });
     });

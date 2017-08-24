@@ -5,7 +5,7 @@
     </div>
     <div class="did-view-row did-view-row-double">
         <div class="did-view-label did-view-label-title">
-            Task
+            {{#__}}Task{{/__}}
             <div class="did-view-value did-big-title did-topic-title did-view-value-title"></div>
         </div>
     </div>

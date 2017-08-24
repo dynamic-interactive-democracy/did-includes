@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>manual test</title>
+        <title>{{ title }}{{ #title }} | {{ /title }}manual test</title>
         <link rel="stylesheet" type="text/css" href="/assets/lib.css">
         <script src="/assets/lib.en_US.js"></script>
     </head>
@@ -29,14 +29,11 @@
             });
             did.api.asUser("{{ currentUser.userId }}", "{{ currentUser.token }}");
             
-            var setUp = {{ & setUpFun }};
-            var info = setUp(did, getParameterByName);
-            var include = info.include;
-            document.title = info.title + " " + document.title;
+            var include = {{ &includeFun }};
 
             include.renderIn(document.querySelector(".circle-container"));
 
-            function getParameterByName(name, url) {
+            function getQueryParam(name, url) {
                 if (!url) url = window.location.href;
                 name = name.replace(/[\[\]]/g, "\\$&");
                 var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),

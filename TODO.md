@@ -1,16 +1,17 @@
 # TODO
 
-- User overview (my circles, tasks, topics, etc)
+- User overview (my circles, tasks, topics, etc) (@HelenaBach is on it)
+- Roles (@hypesystem)
 - Frontend validation in edit and create + display errors
 - Topics
-  - Comments
-  - Attachments
-  - Add proposal
-  - Edit proposal
-  - Remove proposal
-  - Voting on proposal
-  - Edit topic (title, why, owner) (Only missing test with backend that supports title changes)
-  - In some late stage: go back to exploration
+  - Comments (@ath88 is doing the backend)
+  - Attachments (@ath88 is doing the backend)
+  - Add proposal (@ath88 is doing the backend)
+  - Edit proposal (@ath88 is doing the backend)
+  - Remove proposal (@ath88 is doing the backend)
+  - Voting on proposal (@ath88 is doing the backend)
+  - Edit topic (title, why, owner) (Only missing test with backend that supports title changes) (@ath88 is doing the backend)
+  - In some late stage: go back to exploration (@hypesystem)
 - Partials: comments, attachments, overlays
 
 # TODO elsewhere?

@@ -86,6 +86,7 @@ function buildJsBundle(config, callback) {
                 b.transform("./browserify-path-inliner");
                 b.transform("./browserify-locale-inliner", { locale: locale });
                 b.transform("./browserify-y18n-mustache-inliner");
+                b.transform("./browserify-localize-inliner");
                 let babelPresets = [ "es2015" ];
                 if(minified) {
                     babelPresets.push("babili");

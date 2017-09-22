@@ -85,5 +85,15 @@
   "Updating task...": "Updating task...",
   "Failed to update task.": "Failed to update task.",
   "Task updated!": "Task updated!",
-  "Task": "Task"
+  "Task": "Task",
+  "comments": "comments",
+  "stage": "stage",
+  "exploration": "exploration",
+  "In": "In",
+  "picture forming": "picture forming",
+  "proposal shaping": "proposal shaping",
+  "decision making": "decision making",
+  "agreement": "agreement",
+  "attacments": "attacments",
+  "attachments": "attachments"
 }

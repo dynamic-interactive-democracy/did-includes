@@ -6,6 +6,7 @@ const getOverlay = require("../getViewOverlay");
 const createDomNode = require("../createDomNode");
 const renderMembers = require("../renderMembers");
 const viewInclude = require("../viewInclude");
+const localize = require("../../localize");
 
 module.exports = viewInclude({
     html: y18nMustacheReader.readSync(locale(), path.join(__dirname, "view.html.partial")),
@@ -126,8 +127,8 @@ module.exports = viewInclude({
                             ${marked(previewMarkdown(task.aim))}
                         </div>
                         <div class="did-circle-item-stats">
-                            <div>${task.status}</div>
-                            <div>${task.attachments.length} attacments</div>
+                            <div>${translateTaskStatus(task.status)}</div>
+                            <div>${task.attachments.length} ${localize.do(locale(), "attachments")}</div>
                         </div>
                     `; // TODO: Make "status" and "attachments" localized
                     node.href = "#view-task";
@@ -151,9 +152,9 @@ module.exports = viewInclude({
                             ${marked(previewMarkdown(topic.why))}
                         </div>
                         <div class="did-circle-item-stats">
-                            <div>In ${topic.stage} stage</div>
-                            <div>${topic.comments.length} comments</div>
-                            <div>${topic.attachments.length} attacments</div>
+                            <div>${localize.do(locale(), "In")} ${translateTopicStage(topic.stage)} ${localize.do(locale(), "stage")}</div>
+                            <div>${topic.comments.length} ${localize.do(locale(), "comments")}</div>
+                            <div>${topic.attachments.length} ${localize.do(locale(), "attachments")}</div>
                         </div>
                     `; // TODO: Make "stage", "comments" and "attachments" localized
                     node.href = "#view-topic";
@@ -190,4 +191,22 @@ function previewMarkdown(md) {
         return md;
     }
     return md.substring(0, 249) + "&nbsp;&nbsp;&nbsp;&hellip;";
+}
+
+function translateTopicStage(stage) {
+    return {
+        "exploration": localize.do(locale(), "exploration"),
+        "pictureForming": localize.do(locale(), "picture forming"),
+        "proposalShaping": localize.do(locale(), "proposal shaping"),
+        "decisionMaking": localize.do(locale(), "decision making"),
+        "agreement": localize.do(locale(), "agreement")
+    }[stage];
+}
+
+function translateTaskStatus(status) {
+    return {
+        "behindSchedule": localize.do(locale(), "Behind schedule"),
+        "onSchedule": localize.do(locale(), "On schedule"),
+        "aheadOfSchedule": localize.do(locale(), "Ahead of schedule")
+    }[status];
 }

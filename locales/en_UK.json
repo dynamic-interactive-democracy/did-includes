@@ -84,5 +84,7 @@
   "Update task": "Update task",
   "Updating task...": "Updating task...",
   "Failed to update task.": "Failed to update task.",
-  "Task updated!": "Task updated!"
+  "Task updated!": "Task updated!",
+  "comments": "comments",
+  "Task": "Task"
 }
